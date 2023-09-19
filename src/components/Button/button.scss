@@ -1,0 +1,25 @@
+
+button{
+   width: 280px;
+    min-width:200px ;
+    height: 62px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+button.darkBtn{
+background-color: rgb(57, 90, 236);
+color: white;
+font-size: 18px;
+border: solid 2px  rgb(255, 255, 255);
+
+}
+button.normalBtn{
+    background-color: white;
+    color: rgb(57, 90, 236);
+    font-size: 18px;
+    border: solid 2px  rgb(57, 90, 236);
+    }

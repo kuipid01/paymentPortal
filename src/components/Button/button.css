@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Langar&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Licorice&display=swap");
+button {
+  width: 280px;
+  min-width: 200px;
+  height: 62px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+button.darkBtn {
+  background-color: #886D72;
+  color: white;
+  font-size: 18px;
+}
+
+button.normalBtn {
+  background-color: #FBFBFB;
+  color: #333333;
+  font-size: 18px;
+  border: solid 2px #886D72;
+}/*# sourceMappingURL=button.css.map */
