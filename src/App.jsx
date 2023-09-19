@@ -14,6 +14,8 @@ import Home from './pages/Home/Home';
 import Payment from './pages/PaymentPage/Payment';
 import Collect from './pages/CollectPayment/Collect';
 import ConfirmationPage from './pages/ConfirmPayment/ConfirmationPage';
+import Buyer from './components/Buyer/Buyer';
+import Seller from './components/Seller/Seller';
 
 function App() {
   const pageVariants = {
@@ -106,6 +108,14 @@ function App() {
             </AnimatePresence>
           ),
         },
+        {
+          path:'/buyer',
+          element:<Buyer/>,
+        },
+        {
+          path:'/seller',
+          element:<Seller/>,
+        }
       ],
     },
   ]);

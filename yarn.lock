@@ -2496,6 +2496,11 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
+nfc-react-web@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/nfc-react-web/-/nfc-react-web-0.0.2.tgz"
+  integrity sha512-5a1p9hj0g4xqrY2icABlYRzjC093+uaOrGI8pd34nllXg8qqS2dem72XBCgaYg72E4hEXxg5WvKCPU3p8m/eSA==
+
 node-releases@^2.0.13:
   version "2.0.13"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.13.tgz"
@@ -2684,7 +2689,7 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.0.0, react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.8, react-dom@>=16.8.0:
+react-dom@^18.0.0, react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=0.14, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -2729,7 +2734,7 @@ react-router@6.16.0:
   dependencies:
     "@remix-run/router" "1.9.0"
 
-react@*, "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16.8.0", react@>=16.8, react@>=16.8.0:
+react@*, "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16.8.0", react@>=0.14, react@>=16.8, react@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
