@@ -15,65 +15,7 @@ import { BrowserMultiFormatReader } from '@zxing/library';
 const Payment = () => {
   const [radiValue, setRadiValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [scannedData, setScannedData] = useState(null);
-const [isCameraOpen, setIsCameraOpen] = useState(false)
-  // const openCamera = () => {
-  //   setIsCameraOpen(true);
-  // };
 
-  // const closeCamera = () => {
-  //   setIsCameraOpen(false);
-  // };
-
-  // const handleTakePhoto = (dataUri) => {
-  //   // Handle the captured photo (dataUri)
-  //   console.log('Photo taken:', dataUri);
-
-  //   // Close the camera after capturing the photo
-  //   closeCamera();
-  // };
-
-  // useEffect(() => {
-  //   const codeReader = new BrowserMultiFormatReader();
-
-  //   if (isCameraOpen) {
-  //     codeReader.decodeFromVideoDevice(undefined, 'video', (result, error) => {
-  //       if (result) {
-  //         // Handle the scanned QR code data
-  //         console.log('Scanned QR Code:', result.getText());
-  //         setScannedData(result.getText());
-  //       } else if (error) {
-  //         console.error('QR Code scan error:', error);
-  //       }
-  //     });
-  //   }
-
-  //   return () => {
-  //     codeReader.reset();
-  //   };
-  // }, [isCameraOpen]);
-
-  const openCamera = () => {
-    // Check if the device supports the Web Share API
-    if ('contacts' in navigator) {
-      // Open the device's camera app
-      navigator.contacts.select(['phoneNumbers'], (contacts) => {
-        // Handle the selected contact
-        if (contacts.length > 0) {
-          // Access the selected contact's phone number
-          const phoneNumber = contacts[0].phoneNumbers[0].value;
-          // You can use the phone number as needed
-          console.log(`Phone number selected: ${phoneNumber}`);
-        } else {
-          // No contact was selected
-          console.log('No contact selected');
-        }
-      });
-    } else {
-      // Web Share API is not supported
-      alert('Your device does not support this feature.');
-    }
-  };
   useEffect(() => {
     // Simulate loading for 1 second
     const loadingTimeout = setTimeout(() => {
@@ -146,37 +88,11 @@ else {
           {radiValue && <div className="check"></div>}
         </div>
       </div>
-    
-      {/* {isCameraOpen ? (
-        <div>
-          <Camera
-            idealFacingMode={FACING_MODES.ENVIRONMENT}
-            onTakePhoto={(dataUri) => handleTakePhoto(dataUri)}
-          />
-        </div>
-      ) : (
-        <button onClick={openCamera} className="contact">Contactless Payment</button>
-   
-      )} */}
-    {/* {isCameraOpen ? (
-        <div>
-          <Camera
-            idealFacingMode={FACING_MODES.ENVIRONMENT}
-            onTakePhoto={(dataUri) => handleTakePhoto(dataUri)}
-            isFullscreen={true}
-            id="video"
-          />
-          <button onClick={closeCamera}>Close Camera</button>
-        </div>
-      ) : scannedData ? (
-        <div>
-          <p>Scanned Data: {scannedData}</p>
-        </div>
-      ) : (
-        <button onClick={openCamera}>Open Camera</button>
-      )} */}
-      <button onClick={openCamera}>Open Camera</button>
-    </div>
+   <Link to='/paytag'>
+   <button className="contact">Pay ContactLesslly</button>
+  
+   </Link>
+       </div>
     )
 }
  

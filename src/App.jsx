@@ -59,7 +59,7 @@ function App() {
       children: [
         {
           path: '/',
-          element: <ProximityPaymentApp />,
+          element: <Home />,
         },
         {
           path: '/paymentPage',
@@ -74,6 +74,22 @@ function App() {
               >
                 <Payment />
               </motion.div>
+            </AnimatePresence>
+          ),
+        },
+        {
+          path: '/paytag',
+          element:  (
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key="paytag"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <ProximityPaymentApp />
+              </motion.div>   
             </AnimatePresence>
           ),
         },

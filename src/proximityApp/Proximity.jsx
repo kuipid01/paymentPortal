@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import './proximity.scss'
 function ProximityPaymentApp() {
   const [buyerName, setBuyerName] = useState('');
   const [sellerName, setSellerName] = useState('');
@@ -63,41 +63,42 @@ function ProximityPaymentApp() {
   };
 
   return (
-    <div>
+    <div className='proximity'>
       <h2>Proximity Payment App</h2>
-      <div>
-        <label>
-          Buyer's Name:
+
+      
           <input
             type="text"
+            placeholder='Buyers Name'
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Seller's Name:
+     
+    
+
+       
+        
           <input
             type="text"
+            placeholder='Seller Name'
             value={sellerName}
             onChange={(e) => setSellerName(e.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Payment Amount:
+    
+    
+
+    
           <input
             type="text"
+            placeholder='Payment Amount'
             value={paymentAmount}
             onChange={(e) => setPaymentAmount(e.target.value)}
           />
-        </label>
-      </div>
-      <button onClick={startNfcListener}>Start NFC Payment</button>
+ 
+    
+      <button className='btnNfc' onClick={startNfcListener}>Start NFC Payment</button>
       <div>{paymentStatus}</div>
-      <div>
+      <div className='paymentDets'>
         <h3>Buyer's Card Information</h3>
         <p>Card Number: {buyerCard.cardNumber}</p>
         <p>Card Holder: {buyerCard.cardHolder}</p>
