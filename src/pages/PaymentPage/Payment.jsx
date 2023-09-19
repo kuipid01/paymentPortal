@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import "./payment.scss";
+// import QRScanner from '../../components/QrScanComponent/QrScanner';
 import { BiArrowBack } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdOutlinePayment } from "react-icons/md";
@@ -8,31 +9,24 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import Loading from '../../components/Loading/Loading'
 import Button from '../../components/Button/Button'
 import { Link } from "react-router-dom";
+import Camera, { FACING_MODES } from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css'; 
 const Payment = () => {
   const [radiValue, setRadiValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const handleOpenCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      // Handle the camera stream, e.g., display it in a video element
-      const videoElement = document.getElementById('camera-view');
-      if (videoElement) {
-        videoElement.srcObject = stream;
-      }
-    } catch (error) {
-      console.error('Error accessing the camera:', error);
-    }
-  };
-  const [scannedData, setScannedData] = useState(null);
-  const [isScannerVisible, setIsScannerVisible] = useState(false);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
-  const handleScan = (data) => {
-    // Handle the scanned data, e.g., perform payment processing
-    setScannedData(data);
-    // Hide the scanner after scanning a QR code
-    setIsScannerVisible(false);
-  };
+const openCamera = () => {
+  setIsCameraOpen(true);
+};
 
+const handleTakePhoto = (dataUri) => {
+  // Handle the captured photo (dataUri)
+  console.log('Photo taken:', dataUri);
+
+  // Close the camera after capturing the photo
+  setIsCameraOpen(false);
+};
   useEffect(() => {
     // Use setTimeout to change isLoading to false after 5 seconds
     const timer = setTimeout(() => {
@@ -45,6 +39,8 @@ const Payment = () => {
 if (isLoading) {
   return  <Loading/>
 }
+
+
 else {
   return (
    <div className="paymentPageContainer">
@@ -95,20 +91,19 @@ else {
           {radiValue && <div className="check"></div>}
         </div>
       </div>
-      {scannedData ? (
+    
+      {isCameraOpen ? (
         <div>
-          {/* Handle the scanned data */}
-          <p>Scanned Data: {scannedData}</p>
-          {/* Add payment processing logic here */}
+          <Camera
+            idealFacingMode={FACING_MODES.ENVIRONMENT}
+            onTakePhoto={(dataUri) => handleTakePhoto(dataUri)}
+          />
         </div>
-      ) : isScannerVisible ? (
-        <QRScanner onScan={handleScan} />
       ) : (
-        <button onClick={() => setIsScannerVisible(true)} className="contact">
-          Contactless Payment
-        </button>
+        <button onClick={openCamera} className="contact">Contactless Payment</button>
+   
       )}
-      {/* <button onClick={handleOpenCamera} className="contact">Contactless Payment</button> */}
+   
     </div>
     )
 }
