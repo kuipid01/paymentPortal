@@ -23,6 +23,15 @@ const Payment = () => {
       console.error('Error accessing the camera:', error);
     }
   };
+  const [scannedData, setScannedData] = useState(null);
+  const [isScannerVisible, setIsScannerVisible] = useState(false);
+
+  const handleScan = (data) => {
+    // Handle the scanned data, e.g., perform payment processing
+    setScannedData(data);
+    // Hide the scanner after scanning a QR code
+    setIsScannerVisible(false);
+  };
 
   useEffect(() => {
     // Use setTimeout to change isLoading to false after 5 seconds
@@ -86,8 +95,20 @@ else {
           {radiValue && <div className="check"></div>}
         </div>
       </div>
-
-      <button onClick={handleOpenCamera} className="contact">Contactless Payment</button>
+      {scannedData ? (
+        <div>
+          {/* Handle the scanned data */}
+          <p>Scanned Data: {scannedData}</p>
+          {/* Add payment processing logic here */}
+        </div>
+      ) : isScannerVisible ? (
+        <QRScanner onScan={handleScan} />
+      ) : (
+        <button onClick={() => setIsScannerVisible(true)} className="contact">
+          Contactless Payment
+        </button>
+      )}
+      {/* <button onClick={handleOpenCamera} className="contact">Contactless Payment</button> */}
     </div>
     )
 }
