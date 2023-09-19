@@ -16,6 +16,7 @@ import Collect from './pages/CollectPayment/Collect';
 import ConfirmationPage from './pages/ConfirmPayment/ConfirmationPage';
 import Buyer from './components/Buyer/Buyer';
 import Seller from './components/Seller/Seller';
+import ProximityPaymentApp from './proximityApp/Proximity';
 
 function App() {
   const pageVariants = {
@@ -58,7 +59,7 @@ function App() {
       children: [
         {
           path: '/',
-          element: <Home />,
+          element: <ProximityPaymentApp />,
         },
         {
           path: '/paymentPage',
