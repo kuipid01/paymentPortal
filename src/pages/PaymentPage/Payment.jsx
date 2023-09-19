@@ -11,31 +11,47 @@ import Button from '../../components/Button/Button'
 import { Link } from "react-router-dom";
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css'; 
+import { BrowserMultiFormatReader } from '@zxing/library'; 
 const Payment = () => {
   const [radiValue, setRadiValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [scannedData, setScannedData] = useState(null);
 
-const openCamera = () => {
-  setIsCameraOpen(true);
-};
+  const openCamera = () => {
+    setIsCameraOpen(true);
+  };
 
-const handleTakePhoto = (dataUri) => {
-  // Handle the captured photo (dataUri)
-  console.log('Photo taken:', dataUri);
+  const closeCamera = () => {
+    setIsCameraOpen(false);
+  };
 
-  // Close the camera after capturing the photo
-  setIsCameraOpen(false);
-};
+  const handleTakePhoto = (dataUri) => {
+    // Handle the captured photo (dataUri)
+    console.log('Photo taken:', dataUri);
+
+    // Close the camera after capturing the photo
+    closeCamera();
+  };
+
   useEffect(() => {
-    // Use setTimeout to change isLoading to false after 5 seconds
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000); // 5000 milliseconds = 5 seconds
+    const codeReader = new BrowserMultiFormatReader();
 
-    // Clear the timer if the component unmounts
-    return () => clearTimeout(timer);
-  }, []);
+    if (isCameraOpen) {
+      codeReader.decodeFromVideoDevice(undefined, 'video', (result, error) => {
+        if (result) {
+          // Handle the scanned QR code data
+          console.log('Scanned QR Code:', result.getText());
+          setScannedData(result.getText());
+        } else if (error) {
+          console.error('QR Code scan error:', error);
+        }
+      });
+    }
+
+    return () => {
+      codeReader.reset();
+    };
+  }, [isCameraOpen]);
 if (isLoading) {
   return  <Loading/>
 }
@@ -92,7 +108,7 @@ else {
         </div>
       </div>
     
-      {isCameraOpen ? (
+      {/* {isCameraOpen ? (
         <div>
           <Camera
             idealFacingMode={FACING_MODES.ENVIRONMENT}
@@ -102,8 +118,24 @@ else {
       ) : (
         <button onClick={openCamera} className="contact">Contactless Payment</button>
    
+      )} */}
+    {isCameraOpen ? (
+        <div>
+          <Camera
+            idealFacingMode={FACING_MODES.ENVIRONMENT}
+            onTakePhoto={(dataUri) => handleTakePhoto(dataUri)}
+            isFullscreen={true}
+            id="video"
+          />
+          <button onClick={closeCamera}>Close Camera</button>
+        </div>
+      ) : scannedData ? (
+        <div>
+          <p>Scanned Data: {scannedData}</p>
+        </div>
+      ) : (
+        <button onClick={openCamera}>Open Camera</button>
       )}
-   
     </div>
     )
 }
