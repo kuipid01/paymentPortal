@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './proximity.scss'
+import './proximity.scss';
+import Loading from '../components/Loading/Loading';
+
 function ProximityPaymentApp() {
   const [buyerName, setBuyerName] = useState('');
   const [sellerName, setSellerName] = useState('');
   const [paymentAmount, setPaymentAmount] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
   const [nfcReader, setNfcReader] = useState(null);
-  
+  const [isLoading, setIsLoading] = useState(true);
   // Mocked card data for the buyer
   const buyerCard = {
     cardNumber: '**** **** **** 1234',
@@ -20,7 +22,18 @@ function ProximityPaymentApp() {
       const data = 'NFC Data'; // Mock NFC data
       handlePayment(data);
     };
-
+    useEffect(() => {
+        // Simulate loading for 1 second
+        const loadingTimeout = setTimeout(() => {
+          setIsLoading(false); // Set isLoading to false after 1 second
+        }, 1000);
+    
+        // Clean up the timeout when the component unmounts
+        return () => {
+          clearTimeout(loadingTimeout);
+        };
+      }, []);
+    
     // Check for NFC support
     if ('NDEFReader' in window) {
       const reader = new NDEFReader();
@@ -61,51 +74,48 @@ function ProximityPaymentApp() {
       setPaymentStatus('NFC reader started. Move your phone near an NFC tag.');
     }
   };
+  if (isLoading) {
+    return  <Loading/>
+  }
 
-  return (
-    <div className='proximity'>
-      <h2>Proximity Payment App</h2>
-
-      
+  else{
+    return (
+        <div className='proximity'>
+          <h2>Proximity Payment App</h2>
+    
           <input
             type="text"
-            placeholder='Buyers Name'
+            placeholder='Buyer Name'
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
           />
-     
-    
-
-       
-        
+         
           <input
             type="text"
             placeholder='Seller Name'
             value={sellerName}
             onChange={(e) => setSellerName(e.target.value)}
           />
-    
-    
-
-    
+        
           <input
             type="text"
             placeholder='Payment Amount'
             value={paymentAmount}
             onChange={(e) => setPaymentAmount(e.target.value)}
           />
+     
+          <button className='btnNfc' onClick={startNfcListener}>Start NFC Payment</button>
+          <div>{paymentStatus}</div>
+          <div className='paymentDets'>
+            <h3>Buyer's Card Information</h3>
+            <p>Card Number: {buyerCard.cardNumber}</p>
+            <p>Card Holder: {buyerCard.cardHolder}</p>
+            <p>Expiration Date: {buyerCard.expirationDate}</p>
+          </div>
+        </div>
+      );
+  }
  
-    
-      <button className='btnNfc' onClick={startNfcListener}>Start NFC Payment</button>
-      <div>{paymentStatus}</div>
-      <div className='paymentDets'>
-        <h3>Buyer's Card Information</h3>
-        <p>Card Number: {buyerCard.cardNumber}</p>
-        <p>Card Holder: {buyerCard.cardHolder}</p>
-        <p>Expiration Date: {buyerCard.expirationDate}</p>
-      </div>
-    </div>
-  );
 }
 
 export default ProximityPaymentApp;

@@ -93,6 +93,23 @@ function App() {
             </AnimatePresence>
           ),
         },
+        ,
+        // {
+        //   path: '/confirmPay',
+        //   element:  (
+        //     <AnimatePresence mode='wait'>
+        //       <motion.div
+        //         key="confirmPay"
+        //         variants={pageVariants}
+        //         initial="initial"
+        //         animate="animate"
+        //         exit="exit"
+        //       >
+        //         <PaymentConfirmationApp/>
+        //       </motion.div>   
+        //     </AnimatePresence>
+        //   ),
+        // },
         {
           path: '/collectPay',
           element: (
