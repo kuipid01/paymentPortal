@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
-
-import './App.scss'
-
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import './App.scss';
 
 import {
   createBrowserRouter,
@@ -10,45 +9,108 @@ import {
   Route,
   Outlet,
   Link,
-} from "react-router-dom"
+} from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Payment from './pages/PaymentPage/Payment';
+import Collect from './pages/CollectPayment/Collect';
+import ConfirmationPage from './pages/ConfirmPayment/ConfirmationPage';
+
 function App() {
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: .8, // Adjust the duration as needed
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  };
+
   const Layout = () => {
     return (
-      <div >
-      
- 
-           
+      <div>
+        <AnimatePresence mode='wait'>
+          <motion.div
+            key={window.location.pathname}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
             <Outlet />
-      
-
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   };
- 
+
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <Layout />,
       children: [
         {
-          path: "/",
+          path: '/',
           element: <Home />,
         },
         {
-          path: "/paymentPage",
-          element: <Payment />,
+          path: '/paymentPage',
+          element:  (
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key="payment"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Payment />
+              </motion.div>
+            </AnimatePresence>
+          ),
         },
-       
+        {
+          path: '/collectPay',
+          element: (
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key="Collect"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Collect />
+              </motion.div>
+            </AnimatePresence>
+          ),
+        },
+        {
+          path: '/confirm-payment/:token',
+          element: (
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key="ConfirmationPage"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <ConfirmationPage />
+              </motion.div>
+            </AnimatePresence>
+          ),
+        },
       ],
     },
-   
-    
   ]);
 
   return <RouterProvider router={router} />;
 }
 
 export default App;
-

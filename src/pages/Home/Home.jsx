@@ -12,7 +12,10 @@ const Home = () => {
         <Button darkBtn={true} text='Make Payment'/>
         </Link>
         
+        <Link to='/collectPay'>
         <Button darkBtn={false} text='Collect Payment'/>
+        </Link>
+       
     </div>
   )
 }
