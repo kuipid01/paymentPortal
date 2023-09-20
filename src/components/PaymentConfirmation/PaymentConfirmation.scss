@@ -1,0 +1,25 @@
+/* PaymentConfirmation.css */
+
+.payment-confirmation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; /* Background color for the entire page */
+  }
+  
+  .payment-confirmation-content {
+    text-align: center;
+  }
+  
+  .check-icon {
+    font-size: 3rem; /* Adjust the icon size as needed */
+    color: #2ecc71; /* Color for the check icon */
+  }
+  
+  h2 {
+    margin-top: 20px; /* Add spacing below the icon */
+    font-size: 1.5rem; /* Adjust the text size as needed */
+    color: #333; /* Color for the text */
+  }
+  

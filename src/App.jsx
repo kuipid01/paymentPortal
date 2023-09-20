@@ -16,7 +16,7 @@ import Payment from './pages/PaymentPage/Payment';
 import Collect from './pages/CollectPayment/Collect';
 import ConfirmationPage from './pages/ConfirmPayment/ConfirmationPage';
 import Buyer from './components/Buyer/Buyer';
-import Seller from './components/Seller/Seller';
+import PaymentConfirmation from './components/PaymentConfirmation/PaymentConfirmation';
 import ProximityPaymentApp from './proximityApp/Proximity';
 
 function App() {
@@ -148,8 +148,18 @@ function App() {
           element:<Buyer/>,
         },
         {
-          path:'/seller',
-          element:<Seller/>,
+          path:'/confirmPage',
+          element:  (
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key="AnimatePayment"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <PaymentConfirmation/></motion.div> 
+              </AnimatePresence>)
         }
       ],
     },

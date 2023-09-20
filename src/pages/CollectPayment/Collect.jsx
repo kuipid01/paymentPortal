@@ -10,6 +10,7 @@ const Collect = () => {
   const [formData, setFormData] = useState({
     recipient: '',
     amount: 0,
+    link:"https://testpaymentkuipid.netlify.app/confirmPage",
     // Add other payment data fields here
   });
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Collect = () => {
 
     // Set the payment data in state
     setPaymentData({ data: combinedData, token: confirmationToken });
+    
   };
 
   return (
