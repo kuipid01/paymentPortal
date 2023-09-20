@@ -33,3 +33,63 @@
         text-transform: uppercase;
     }
 }
+.error{
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 10px;
+    position: relative;
+    img{
+        width: 70%;
+        height: 300px;
+        object-fit: cover;
+        background-color: #fff;
+    }
+    .textError{
+      
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        font-family: inter, 'serif';
+        animation: moveLeftToRight 1.3s linear infinite; // Adjust the duration as needed
+    
+        
+    }
+    a.abs{
+        display: flex;
+        position: absolute;
+        top: 3%;
+        left: 3%;
+      align-items: center;
+      gap: 20px;
+      font-size: 15px;
+      font-weight: bold;
+        color: white;
+        svg{
+            font-size: 30px;
+        }
+    }
+    @keyframes moveLeftToRight {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.1);
+        }
+      }
+      
+   
+}
+.nfcreader{
+    width: 100%;
+    height: 100vh;
+    color: white;
+    padding: 1rem;
+    img{
+width: 100%;
+height: 80vh;
+object-position: center;
+object-fit: cover;
+    }
+}

@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css'; 
 import { BrowserMultiFormatReader } from '@zxing/library'; 
+// import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 const Payment = () => {
   const [radiValue, setRadiValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,8 +30,41 @@ const Payment = () => {
   }, []);
 
  
-
-
+  const config = {
+    public_key: "FLWPUBK_TEST-cf4564e4f7931f5cc9f23aa36942617c-X",
+    tx_ref: Date.now(),
+    amount: 10000 ,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: 'adeyemi@gmail.com',
+      phone_number:  '+2349157016669',
+      name: 'Adeyemi Adeniyi',
+    },
+    customizations: {
+      title: "Flutter Product Payment Page",
+      description: "Payment for items ",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+ 
+  // const handleFlutterPayment =   useFlutterwave(config);
+  const handleCheckOut = () => {
+    setRadiValue(!radiValue)
+     setIsLoading(true)
+     setTimeout(() => {
+       setIsLoading(false)
+     }, 1000);
+    handleFlutterPayment({
+      callback: (response) => {
+        console.log(response);
+        closePaymentModal();
+      },
+      onClose: () => {},
+    },
+    )
+    
+  }
 
 
 if (isLoading) {
@@ -55,7 +89,7 @@ else {
         <MdOutlinePayment className="cardIcon" />
         <span className="cc">Credit Card</span>
         <div className="radio" onClick={() => setRadiValue(!radiValue)}>
-          {radiValue && <div className="check"></div>}
+          {radiValue ? <div className="check"></div> : ''}
         </div>
       </div>
       <div className="cardInfo">
@@ -81,14 +115,14 @@ else {
           </div>
         </div>
       </div>
-      <div className="flutter flexCenter">
+      <div onClick={handleCheckOut} className="flutter flexCenter">
         <img src="flutterwave.png" alt="" />
         <span className="cc">Flutterwave</span>
-        <div className="radio" onClick={() => setRadiValue(!radiValue)}>
-          {radiValue && <div className="check"></div>}
+        <div className="radio" >
+          {!radiValue ? <div className="check"></div>: ''}
         </div>
       </div>
-   <Link to='/paytag'>
+   <Link className="btnProblem" to='/paytag'>
    <button className="contact">Pay ContactLesslly</button>
   
    </Link>

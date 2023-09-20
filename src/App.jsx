@@ -1,3 +1,4 @@
+/* eslint-disable no-sparse-arrays */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -75,7 +76,7 @@ function App() {
                 <Payment />
               </motion.div>
             </AnimatePresence>
-          ),
+          )
         },
         {
           path: '/paytag',

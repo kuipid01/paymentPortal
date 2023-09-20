@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import QRCode from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';

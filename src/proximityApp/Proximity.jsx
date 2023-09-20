@@ -1,14 +1,22 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import './proximity.scss';
 import Loading from '../components/Loading/Loading';
-
+import { BiArrowBack } from "react-icons/bi";
+import { Link } from 'react-router-dom';
+import {motion} from 'framer-motion'
+import Button from '../components/Button/Button';
 function ProximityPaymentApp() {
   const [buyerName, setBuyerName] = useState('');
   const [sellerName, setSellerName] = useState('');
   const [paymentAmount, setPaymentAmount] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
   const [nfcReader, setNfcReader] = useState(null);
+  const [testPage, settestPage] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [Page, setPage] = useState(false)
   // Mocked card data for the buyer
   const buyerCard = {
     cardNumber: '**** **** **** 1234',
@@ -16,23 +24,24 @@ function ProximityPaymentApp() {
     expirationDate: '12/25',
   };
 
+  useEffect(() => {
+    // Simulate loading for 1 second
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false); // Set isLoading to false after 1 second
+    }, 1000);
+
+    // Clean up the timeout when the component unmounts
+    return () => {
+      clearTimeout(loadingTimeout);
+    };
+  }, []);
   // Simulate NFC reading (for demonstration purposes)
   useEffect(() => {
     const simulateNFCRead = () => {
       const data = 'NFC Data'; // Mock NFC data
       handlePayment(data);
     };
-    useEffect(() => {
-        // Simulate loading for 1 second
-        const loadingTimeout = setTimeout(() => {
-          setIsLoading(false); // Set isLoading to false after 1 second
-        }, 1000);
-    
-        // Clean up the timeout when the component unmounts
-        return () => {
-          clearTimeout(loadingTimeout);
-        };
-      }, []);
+
     
     // Check for NFC support
     if ('NDEFReader' in window) {
@@ -48,7 +57,8 @@ function ProximityPaymentApp() {
 
       setNfcReader(reader);
     } else {
-      setPaymentStatus('NFC not supported in this browser.');
+      setPage(true)
+      setPaymentStatus('NFC communication not supported on this device. ');
     }
   }, []);
 
@@ -77,7 +87,31 @@ function ProximityPaymentApp() {
   if (isLoading) {
     return  <Loading/>
   }
-
+if (Page) {
+  return(
+    <div className="error flexCenter">
+        <Link className='abs' to='/paymentPage'>
+    <BiArrowBack className="backArrow" /> <span>Go Home</span>
+  </Link>
+      <img src="" alt="" className="error" />
+         <div className='textError'>{paymentStatus}</div>
+         <Link to='/paymentPage'>
+<Button darkBtn={false} text="Go Home"/>
+  </Link>
+    </div>
+  )
+} 
+else if(testPage) {
+ return (
+  <div className="nfcreader flexCenter">
+    <div className="blurBg"></div>
+    <div className="animationPage">
+      <img src="" alt="" className="phone" />
+      <motion.p initial={{left:'3px'}} animate={{right:'3px'}} className="text"> "Move Device Across  Sellers Nfc Tag " </motion.p>
+    </div>
+  </div>
+ )
+}  
   else{
     return (
         <div className='proximity'>
@@ -104,8 +138,8 @@ function ProximityPaymentApp() {
             onChange={(e) => setPaymentAmount(e.target.value)}
           />
      
-          <button className='btnNfc' onClick={startNfcListener}>Start NFC Payment</button>
-          <div>{paymentStatus}</div>
+          <button className='btnNfc' onClick={startNfcListener}>Initiate Payment</button>
+       
           <div className='paymentDets'>
             <h3>Buyer's Card Information</h3>
             <p>Card Number: {buyerCard.cardNumber}</p>
