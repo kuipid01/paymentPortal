@@ -1,30 +1,12 @@
-import React from 'react';
-import Nfc from 'nfc-react-web';
+// src/Buyer.js
 
-const mockPaymentData = {
-  amount: 50,
-  currency: 'USD',
-  transactionId: '12345',
-};
+import BluetoothPayment from '../BluetoothPayment/BluetoothPayment';
 
 function Buyer() {
-  const handleNfcWrite = (error) => {
-    if (error) {
-      console.log('An error occurred while writing to tag: ', error);
-    } else {
-      console.log('Payment data written to NFC tag! :)');
-    }
-  };
-
-  const writePaymentDataToNfcTag = () => {
-    const nfc = new Nfc({ onWrite: handleNfcWrite });
-    nfc.write(mockPaymentData);
-  };
-
   return (
     <div>
-      <h2>Buyer</h2>
-      <button onClick={writePaymentDataToNfcTag}>Buy</button>
+      <h1>Buyer Interface</h1>
+      <BluetoothPayment />
     </div>
   );
 }
