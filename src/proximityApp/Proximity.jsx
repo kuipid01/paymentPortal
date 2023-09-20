@@ -93,7 +93,7 @@ if (Page) {
         <Link className='abs' to='/paymentPage'>
     <BiArrowBack className="backArrow" /> <span>Go Home</span>
   </Link>
-      <img src="" alt="" className="error" />
+      <img src="https://i.pinimg.com/originals/00/9f/65/009f6528de23c73d978e437bf1ee2274.gif" alt="" className="error" />
          <div className='textError'>{paymentStatus}</div>
          <Link to='/paymentPage'>
 <Button darkBtn={false} text="Go Home"/>
@@ -101,17 +101,17 @@ if (Page) {
     </div>
   )
 } 
-else if(testPage) {
- return (
-  <div className="nfcreader flexCenter">
-    <div className="blurBg"></div>
-    <div className="animationPage">
-      <img src="" alt="" className="phone" />
-      <motion.p initial={{left:'3px'}} animate={{right:'3px'}} className="text"> "Move Device Across  Sellers Nfc Tag " </motion.p>
-    </div>
-  </div>
- )
-}  
+// else if(testPage) {
+//  return (
+//   <div className="nfcreader flexCenter">
+//     <div className="blurBg"></div>
+//     <div className="animationPage">
+//       <img src="blue.png" alt="" className="phone" />
+//       <motion.p initial={{left:'3px'}} animate={{right:'3px'}} className="text"> "Move Device Across  Sellers Nfc Tag " </motion.p>
+//     </div>
+//   </div>
+//  )
+// }  
   else{
     return (
         <div className='proximity'>

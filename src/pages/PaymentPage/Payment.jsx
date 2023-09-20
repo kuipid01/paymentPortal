@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css'; 
 import { BrowserMultiFormatReader } from '@zxing/library'; 
-// import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 const Payment = () => {
   const [radiValue, setRadiValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,13 +48,13 @@ const Payment = () => {
     },
   };
  
-  // const handleFlutterPayment =   useFlutterwave(config);
+   const handleFlutterPayment =   useFlutterwave(config);
   const handleCheckOut = () => {
     setRadiValue(!radiValue)
      setIsLoading(true)
      setTimeout(() => {
        setIsLoading(false)
-     }, 1000);
+     }, 2000);
     handleFlutterPayment({
       callback: (response) => {
         console.log(response);
