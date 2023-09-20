@@ -8,6 +8,9 @@ import { BiArrowBack } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "../components/Button/Button";
+import { FaCheckCircle } from "react-icons/fa"; // Import Font Awesome checkmark icon
+import './proximity.scss'; // Add CSS for PaymentConfirmationPage
+
 function ProximityPaymentApp() {
   const [buyerName, setBuyerName] = useState("");
   const [sellerName, setSellerName] = useState("");
@@ -17,12 +20,16 @@ function ProximityPaymentApp() {
   const [testPage, settestPage] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [Page, setPage] = useState(false);
+  const [isNfcReading, setIsNfcReading] = useState(false); // New state for NFC reading
+  const [nfcData, setNfcData] = useState(null); // New state for NFC data
+
   // Mocked card data for the buyer
   const buyerCard = {
     cardNumber: "**** **** **** 1234",
     cardHolder: "John Doe",
     expirationDate: "12/25",
   };
+
   const pageVariants = {
     initial: {
       opacity: 0,
@@ -37,6 +44,7 @@ function ProximityPaymentApp() {
       opacity: 0,
     },
   };
+
   useEffect(() => {
     // Simulate loading for 1 second
     const loadingTimeout = setTimeout(() => {
@@ -48,10 +56,12 @@ function ProximityPaymentApp() {
       clearTimeout(loadingTimeout);
     };
   }, []);
+
   // Simulate NFC reading (for demonstration purposes)
   useEffect(() => {
-    const simulateNFCRead = () => {
-      const data = "NFC Data"; // Mock NFC data
+    const simulateNFCRead = (data) => {
+      setIsNfcReading(false); // NFC reading completed
+      setNfcData(data); // Set NFC data in state
       handlePayment(data);
     };
 
@@ -64,7 +74,7 @@ function ProximityPaymentApp() {
       };
 
       reader.onreading = () => {
-        simulateNFCRead();
+        simulateNFCRead("NFC Data"); // Mock NFC data for demonstration
       };
 
       setNfcReader(reader);
@@ -94,13 +104,16 @@ function ProximityPaymentApp() {
 
   const startNfcListener = () => {
     if (nfcReader) {
+      setIsNfcReading(true); // Start NFC reading animation
       nfcReader.scan();
       setPaymentStatus("NFC reader started. Move your phone near an NFC tag.");
     }
   };
+
   if (isLoading) {
     return <Loading />;
   }
+
   if (Page) {
     return (
       <div className="error flexCenter">
@@ -118,19 +131,7 @@ function ProximityPaymentApp() {
         </Link>
       </div>
     );
-  }
-  // else if(testPage) {
-  //  return (
-  //   <div className="nfcreader flexCenter">
-  //     <div className="blurBg"></div>
-  //     <div className="animationPage">
-  //       <img src="blue.png" alt="" className="phone" />
-  //       <motion.p initial={{left:'3px'}} animate={{right:'3px'}} className="text"> "Move Device Across  Sellers Nfc Tag " </motion.p>
-  //     </div>
-  //   </div>
-  //  )
-  // }
-  else {
+  } else {
     return (
       <div className="proximity">
         <h2>Proximity Payment App</h2>
@@ -159,8 +160,8 @@ function ProximityPaymentApp() {
         <button className="btnNfc" onClick={startNfcListener}>
           Initiate Payment
         </button>
-        {paymentStatus ===
-        "NFC reader started. Move your phone near an NFC tag." ? (
+
+        {paymentStatus === "NFC reader started. Move your phone near an NFC tag." && (
           <AnimatePresence>
             <motion.div
               key="Proximity"
@@ -175,21 +176,31 @@ function ProximityPaymentApp() {
                 alt=""
                 className="phone"
               />
-              <p className="Animatetext">
-                {" "}
-                "Move Device Across Sellers Nfc Tag "{" "}
-              </p>
+              <p className="Animatetext">"Move Device Across Sellers Nfc Tag "</p>
             </motion.div>
           </AnimatePresence>
-        ) : (
-          ""
         )}
 
         <div className="paymentDets">
           <h3>Buyer's Card Information</h3>
+        
           <p>Card Number: {buyerCard.cardNumber}</p>
           <p>Card Holder: {buyerCard.cardHolder}</p>
           <p>Expiration Date: {buyerCard.expirationDate}</p>
+        </div>
+
+        {/* Display NFC Data */}
+        {nfcData && (
+          <div className="nfc-data">
+            <h3>NFC Data Read:</h3>
+            <p>{nfcData}</p>
+          </div>
+        )}
+
+        {/* Display Payment Status */}
+        <div className="payment-status">
+          <h3>Payment Status:</h3>
+          <p>{paymentStatus}</p>
         </div>
       </div>
     );
