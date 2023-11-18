@@ -65,6 +65,7 @@ const Login = () => {
           id="email"
           name="email"
           value={email}
+          placeholder='Enter Email'
           onChange={handleEmailChange}
           required
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
@@ -75,6 +76,7 @@ const Login = () => {
             id="password"
             name="password"
             value={password}
+            classNamepassword
             onChange={handlePasswordChange}
             required
             className="p-2 pr-10 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
