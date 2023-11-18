@@ -76,7 +76,7 @@ const Login = () => {
             id="password"
             name="password"
             value={password}
-            classNamepassword
+           placeholder='Enter Password'
             onChange={handlePasswordChange}
             required
             className="p-2 pr-10 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
