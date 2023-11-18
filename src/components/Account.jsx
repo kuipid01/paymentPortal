@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { AppContext } from '../contexts/AppContext';
-import ButtonComponent from './ButtonComponent';
+import ButtonComponent from './ButtonComponent.jsx';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const Account = () => {
   const { curUser, setCurUser, getUsers, cards, getCards } = useContext(AppContext);

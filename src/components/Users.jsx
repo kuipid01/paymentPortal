@@ -3,7 +3,8 @@ import { Table } from 'react-bootstrap';
 import ButtonComponent from './ButtonComponent';
 import { AppContext } from '../contexts/AppContext';
 import { deleteDoc, updateDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
+
 import { Link } from 'react-router-dom';
 
 const Users = () => {

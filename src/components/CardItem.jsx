@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
-
+import './cardItem.scss'
 const CardItem = ({ card, hide, hideAll, className }) => {
   const { users, curUser } = useContext(AppContext);
   const cardHolder = users.find(u => u.id === card.cardHolderId);

@@ -3,7 +3,8 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
 import ButtonComponent from './ButtonComponent';
 import { updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
+
 import { Form } from 'react-bootstrap';
 
 const Update = () => {

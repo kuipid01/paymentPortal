@@ -1,16 +1,15 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
 import { generateUniqueToken } from '../../generateToken';
-import './collectPay.scss'
 import { AiOutlineClose } from 'react-icons/ai';
+
 const Collect = () => {
   const [paymentData, setPaymentData] = useState('');
   const [formData, setFormData] = useState({
     recipient: '',
     amount: 0,
-    link:"https://testpaymentkuipid.netlify.app/confirmPage",
+    link: 'https://testpaymentkuipid.netlify.app/confirmPage',
     // Add other payment data fields here
   });
   const navigate = useNavigate();
@@ -18,50 +17,72 @@ const Collect = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Combine payment data fields into a single string or JSON object
-    const combinedData = JSON.stringify(formData);
+    // Combine payment data fields into a single object
+    const combinedData = { ...formData };
 
     // Generate a unique confirmation token
     const confirmationToken = generateUniqueToken(12);
 
     // Set the payment data in state
     setPaymentData({ data: combinedData, token: confirmationToken });
-    
+
+    // Navigate to the success page
+    // navigate('/success');
   };
 
-  return (
-    <div className='payContainer'>
-      <h2>Payment Form</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter Recipent Name"
-          onChange={(e) => setFormData({ ...formData, recipient: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Enter Price to Be paid"
-          onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-        />
-        {/* Add other input fields for payment data */}
-        <button type="submit">Generate QR Code</button>
-      </form>
+  const isFormValid = formData.recipient && formData.amount > 0;
 
-      {paymentData.data && (
-        <div className="container">
-          <div className="close" onClick={() => setPaymentData('')}> <AiOutlineClose /></div>
- <div className='qrContainer'>
-          
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+      <div className="max-w-md w-full bg-white bg-opacity-90 p-8 rounded-md shadow-md">
+        <h2 className="text-2xl font-bold mb-4">Payment Form</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter Recipient Name"
+            onChange={(e) => setFormData({ ...formData, recipient: e.target.value })}
+            className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
+          />
+          <input
+            type="number"
+            placeholder="Enter Price to Be Paid"
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+            className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
+          />
+          {/* Add other input fields for payment data */}
+          <button
+            type="submit"
+            className={`w-full bg-blue-500 text-white p-2 rounded-md ${
+              isFormValid ? 'hover:bg-blue-700' : 'opacity-50 cursor-not-allowed'
+            } focus:outline-none focus:ring focus:border-blue-300 mt-4`}
+            disabled={!isFormValid}
+          >
+            Generate QR Code
+          </button>
+        </form>
+
+        {paymentData.data && (
+          <div className="mt-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="cursor-pointer text-gray-300 hover:text-gray-200">
+                <AiOutlineClose onClick={() => setPaymentData('')} className="text-xl" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <div className="mr-8">
+                {/* Add any additional styling for the container */}
+              </div>
+
+              <div className="bg-white p-4 rounded-md">
+                <QRCode value={JSON.stringify(paymentData)} />
+              </div>
+            </div>
           </div>
-          <div className="qr">
-          <QRCode value={JSON.stringify(paymentData)} />
-          </div>
-       
-        </div>
-       
-      )}
+        )}
+      </div>
     </div>
   );
-}
+};
 
-export default Collect
+export default Collect;

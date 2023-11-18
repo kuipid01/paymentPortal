@@ -3,7 +3,8 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
 import ButtonComponent from './ButtonComponent';
 import CardItem from './CardItem';
-import { db } from '../firebase';
+import { db } from '../../firebase';
+
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import phone from '../img/phone.png';
 import { useState } from 'react';

@@ -1,23 +1,24 @@
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Home from './components/Home';
-// import Login from './pages/Login';
-import CardDetail from './components/CardDetail';
-import Create from './components/Create';
-import Update from './components/Update';
-import NotFound from './components/NotFound';
+
 import { AppContext } from './contexts/AppContext';
-import Register from './components/Register';
-import Footer from './components/Footer';
+
 
  import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import Users from './components/Users';
-import AllCards from './components/AllCards';
-import Account from './components/Account';
+import Home from './components/Home';
 import Login from './pages/Login/Login';
+import CardDetail from './components/CardDetail';
+import Update from './components/Update';
+import Users from './components/Users';
+import Account from './components/Account';
+import Header from './components/Header';
+import Register from './components/Register';
+import Create from './components/Create';
+import AllCards from './components/AllCards';
+import Collect from './pages/CollectPayment/Collect';
+
 
 function App() {
   const usersCollectionRef = collection(db, 'users');
@@ -57,7 +58,7 @@ function App() {
           getCards,
         }}
       >
-        <Header />
+        {/* <Header /> */}
      
               <Routes>
                 <Route path="/" element={<Home />}></Route>
@@ -69,10 +70,11 @@ function App() {
                 <Route path="/users" element={<Users />}></Route>
                 <Route path="/cards" element={<AllCards />}></Route>
                 <Route path="/account" element={<Account />}></Route>
-                <Route path="*" element={<NotFound />}></Route>
+                <Route path="/collect" element={<Collect />}></Route>
+              
               </Routes>
            
-        <Footer />
+    
       </AppContext.Provider>
     </Router>
   );

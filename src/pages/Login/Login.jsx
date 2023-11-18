@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import  {useNavigate}  from 'react-router-dom' 
-import { AppContext } from '../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 const Login = () => {
 const { users, setCurUser, getUsers } = useContext(AppContext);
   const [email, setEmail] = useState('');
@@ -30,7 +30,7 @@ const { users, setCurUser, getUsers } = useContext(AppContext);
     const user = users.find(u => u.email === email);
 
     if (user) {
-      const validPassword = await password===user.password;
+      const validPassword =  password===user.password;
       if (validPassword) {
         setCurUser(user);
         sessionStorage.setItem('curUser', JSON.stringify(user));

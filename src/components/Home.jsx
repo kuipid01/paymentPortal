@@ -16,26 +16,40 @@ const Home = () => {
   }
 
   return curUser ? (
-    <Container className="d-flex flex-column align-items-center">
-      {cardsFiltered.length > 0 ? (
-        <>
-          <h1>My Cards</h1>
-          {cardsFiltered.map(card => {
-            return (
-              <Link to={`/card/${card.id}`} key={card.id} className="card-list">
-                <CardItem card={card} hide={true} />
-              </Link>
-            );
-          })}
-        </>
-      ) : (
-        <h1>Add a card!</h1>
-      )}
+    <div className="flex mt-5 flex-col items-center">
+    {cardsFiltered.length > 0 ? (
+      <>
+        <h1 className="text-2xl font-bold mb-4">My Cards</h1>
+        {cardsFiltered.map((card) => (
+          <a
+            href={`/card/${card.id}`}
+            key={card.id}
+            className="card-list block w-full mb-4 p-4 border border-gray-300 rounded-md hover:border-blue-500"
+          >
+            {/* Assuming CardItem is a component to display card details */}
+            <CardItem card={card} hide={true} />
+          </a>
+        ))}
+      </>
+    ) : (
+      <h1 className="text-2xl font-bold">Add a card!</h1>
+    )}
 
-      <ButtonComponent onClick={() => navigate('/create')} className="appear">
-        + Add
-      </ButtonComponent>
-    </Container>
+    <button
+      onClick={() => navigate('/create')}
+      className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4"
+    >
+      + Add
+    </button>
+    <div className="flex w-full px-5 gap-3 justify-center items-center">
+    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/makePayment'>Make Payment</Link>
+    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/collect'>Scan To pay</Link>
+   
+   
+    </div>
+    
+   
+  </div>
   ) : (
     <Navigate to={{ pathname: '/login' }} />
   );
