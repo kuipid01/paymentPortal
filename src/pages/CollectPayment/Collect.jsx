@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
 import { generateUniqueToken } from '../../generateToken';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 
 const Collect = () => {
   const [paymentData, setPaymentData] = useState('');
@@ -33,10 +33,11 @@ const Collect = () => {
   const isFormValid = formData.recipient && formData.amount > 0;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
-      <div className="max-w-md w-full bg-white bg-opacity-90 p-8 rounded-md shadow-md">
+    <div className="flex items-center justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+      <AiOutlineArrowLeft onClick={() => navigate(-1)} className='text-3xl absolute text-white top-3 left-3'/>
+      <div className="max-w-md w-[90%] bg-white bg-opacity-90 p-4 md:p-8 rounded-md shadow-md">
         <h2 className="text-2xl font-bold mb-4">Payment Form</h2>
-        <form onSubmit={handleSubmit}>
+        <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Enter Recipient Name"

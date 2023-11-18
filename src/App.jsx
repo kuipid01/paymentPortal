@@ -41,7 +41,7 @@ function App() {
     getUsers();
     getCards();
   }, []);
-
+console.log(users)
   return (
     <Router>
       <AppContext.Provider

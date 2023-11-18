@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
 import ButtonComponent from './ButtonComponent';
 import CardItem from './CardItem';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const Home = () => {
   const { curUser, cards } = useContext(AppContext);
@@ -16,7 +17,9 @@ const Home = () => {
   }
 
   return curUser ? (
-    <div className="flex mt-5 flex-col items-center">
+    <div className="flex mt-5 relative flex-col items-center ">
+      <AiOutlineArrowLeft onClick={() => navigate(-1)} className='text-3xl absolute text-gray-600 top-3 left-3'/>
+    
     {cardsFiltered.length > 0 ? (
       <>
         <h1 className="text-2xl font-bold mb-4">My Cards</h1>
@@ -43,7 +46,7 @@ const Home = () => {
     </button>
     <div className="flex w-full px-5 gap-3 justify-center items-center">
     <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/makePayment'>Make Payment</Link>
-    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/collect'>Scan To pay</Link>
+    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/collect'>Collect Payment</Link>
    
    
     </div>
