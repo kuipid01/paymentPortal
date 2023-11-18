@@ -1,171 +1,81 @@
-/* eslint-disable no-sparse-arrays */
-/* eslint-disable no-unused-vars */
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import './App.scss';
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Outlet,
-  Link,
-} from 'react-router-dom';
-import Home from './pages/Home/Home';
-import Payment from './pages/PaymentPage/Payment';
-import Collect from './pages/CollectPayment/Collect';
-import ConfirmationPage from './pages/ConfirmPayment/ConfirmationPage';
-import Buyer from './components/Buyer/Buyer';
-import PaymentConfirmation from './components/PaymentConfirmation/PaymentConfirmation';
-import ProximityPaymentApp from './proximityApp/Proximity';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Home from './components/Home';
+// import Login from './pages/Login';
+import CardDetail from './components/CardDetail';
+import Create from './components/Create';
+import Update from './components/Update';
+import NotFound from './components/NotFound';
+import { AppContext } from './contexts/AppContext';
+import Register from './components/Register';
+import Footer from './components/Footer';
+
+ import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import Users from './components/Users';
+import AllCards from './components/AllCards';
+import Account from './components/Account';
+import Login from './pages/Login/Login';
 
 function App() {
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: .8, // Adjust the duration as needed
-      },
-    },
-    exit: {
-      opacity: 0,
-    },
+  const usersCollectionRef = collection(db, 'users');
+  const cardsCollectionRef = collection(db, 'cards');
+  const [curUser, setCurUser] = useState(JSON.parse(sessionStorage.getItem('curUser')));
+  const [users, setUsers] = useState([]);
+  const [cards, setCards] = useState([]);
+
+  const getUsers = async () => {
+    const usersData = await getDocs(usersCollectionRef);
+    setUsers(usersData.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   };
 
-  const Layout = () => {
-    return (
-      <div>
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={window.location.pathname}
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    );
+  const getCards = async () => {
+    const cardsData = await getDocs(cardsCollectionRef);
+    setCards(cardsData.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   };
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Layout />,
-      children: [
-        {
-          path: '/',
-          element: <Home />,
-        },
-        {
-          path: '/paymentPage',
-          element:  (
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key="payment"
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <Payment />
-              </motion.div>
-            </AnimatePresence>
-          )
-        },
-        {
-          path: '/paytag',
-          element:  (
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key="paytag"
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <ProximityPaymentApp />
-              </motion.div>   
-            </AnimatePresence>
-          ),
-        },
-        ,
-        // {
-        //   path: '/confirmPay',
-        //   element:  (
-        //     <AnimatePresence mode='wait'>
-        //       <motion.div
-        //         key="confirmPay"
-        //         variants={pageVariants}
-        //         initial="initial"
-        //         animate="animate"
-        //         exit="exit"
-        //       >
-        //         <PaymentConfirmationApp/>
-        //       </motion.div>   
-        //     </AnimatePresence>
-        //   ),
-        // },
-        {
-          path: '/collectPay',
-          element: (
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key="Collect"
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <Collect />
-              </motion.div>
-            </AnimatePresence>
-          ),
-        },
-        {
-          path: '/confirm-payment/:token',
-          element: (
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key="ConfirmationPage"
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <ConfirmationPage />
-              </motion.div>
-            </AnimatePresence>
-          ),
-        },
-        {
-          path:'/buyer',
-          element:<Buyer/>,
-        },
-        {
-          path:'/confirmPage',
-          element:  (
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key="AnimatePayment"
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <PaymentConfirmation/></motion.div> 
-              </AnimatePresence>)
-        }
-      ],
-    },
-  ]);
+  useEffect(() => {
+    getUsers();
+    getCards();
+  }, []);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Router>
+      <AppContext.Provider
+        value={{
+          curUser,
+          setCurUser,
+          users,
+          setUsers,
+          cards,
+          setCards,
+          usersCollectionRef,
+          cardsCollectionRef,
+          getUsers,
+          getCards,
+        }}
+      >
+        <Header />
+     
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/register" element={<Register />}></Route>
+                <Route path="/card/:id" element={<CardDetail />}></Route>
+                <Route path="/create" element={<Create />}></Route>
+                <Route path="/update/:id" element={<Update />}></Route>
+                <Route path="/users" element={<Users />}></Route>
+                <Route path="/cards" element={<AllCards />}></Route>
+                <Route path="/account" element={<Account />}></Route>
+                <Route path="*" element={<NotFound />}></Route>
+              </Routes>
+           
+        <Footer />
+      </AppContext.Provider>
+    </Router>
+  );
 }
 
 export default App;
