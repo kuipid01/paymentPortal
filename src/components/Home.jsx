@@ -45,7 +45,7 @@ const Home = () => {
       + Add
     </button>
     <div className="flex w-full px-5 gap-3 justify-center items-center">
-    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/makePayment'>Make Payment</Link>
+    <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/make'>Make Payment</Link>
     <Link className='bg-blue-500 w-1/2 flex justify-center items-center text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 mt-4' to='/collect'>Collect Payment</Link>
    
    

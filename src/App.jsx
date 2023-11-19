@@ -18,6 +18,7 @@ import Register from './components/Register';
 import Create from './components/Create';
 import AllCards from './components/AllCards';
 import Collect from './pages/CollectPayment/Collect';
+import Payment from './pages/PaymentPage/Payment';
 
 
 function App() {
@@ -71,6 +72,7 @@ console.log(users)
                 <Route path="/cards" element={<AllCards />}></Route>
                 <Route path="/account" element={<Account />}></Route>
                 <Route path="/collect" element={<Collect />}></Route>
+                <Route path="/make" element={<Payment />}></Route>
               
               </Routes>
            
