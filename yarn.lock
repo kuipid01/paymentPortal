@@ -1900,6 +1900,15 @@
   optionalDependencies:
     "@zxing/text-encoding" "~0.9.0"
 
+"@zxing/library@^0.19.1":
+  version "0.19.3"
+  resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.19.3.tgz#8f8fb119edac43c109e7d74ae240daba04b7f44f"
+  integrity sha512-RUv5svewpDoD0ymXleOP8yVTO5BLkR0zn5coGC/Vs1671u0OBJ4xdtR8WVWf08OcvrieEMHdSfQY3ZKtqII/hg==
+  dependencies:
+    ts-custom-error "^3.2.1"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
 "@zxing/library@^0.20.0":
   version "0.20.0"
   resolved "https://registry.npmjs.org/@zxing/library/-/library-0.20.0.tgz"
@@ -2622,6 +2631,15 @@ esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
+
+exeter-react-qr-reader@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/exeter-react-qr-reader/-/exeter-react-qr-reader-3.0.2.tgz#21c3f5f0d5955e6bac3e4292f83784785f18b107"
+  integrity sha512-wdY35uSXUuybQsrZwI4JBM/CrQvoKrVoYs6EobupbT53oNk1xgHC/2eeC19OzyZFZx5Eksm5sGIzEgVaZHa38Q==
+  dependencies:
+    "@zxing/browser" "0.0.7"
+    "@zxing/library" "^0.18.3"
+    rollup "^2.67.2"
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
@@ -3727,6 +3745,14 @@ react-qr-reader@^3.0.0-beta-1:
     "@zxing/browser" "0.0.7"
     "@zxing/library" "^0.18.3"
     rollup "^2.67.2"
+
+react-qr-scanner@^1.0.0-alpha.11:
+  version "1.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/react-qr-scanner/-/react-qr-scanner-1.0.0-alpha.11.tgz#9ba14b4aaf2254bd93c81b0dbc7e2c2c6b007d2e"
+  integrity sha512-TdaygL+4U9iapskJgK5Ilb1Cw4wwzQ3bVpIfzzbrEsxPaEJzmjQ7VuMz8E9hBQGCU4Ee+YtgglE3byEtgtRpkA==
+  dependencies:
+    "@zxing/library" "^0.19.1"
+    prop-types "^15.8.1"
 
 react-refresh@^0.14.0:
   version "0.14.0"
