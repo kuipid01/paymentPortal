@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const Home = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);

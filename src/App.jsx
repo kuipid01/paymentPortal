@@ -19,6 +19,7 @@ import Create from './components/Create';
 import AllCards from './components/AllCards';
 import Collect from './pages/CollectPayment/Collect';
 import Payment from './pages/PaymentPage/Payment';
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -62,7 +63,8 @@ console.log(users)
         {/* <Header /> */}
      
               <Routes>
-                <Route path="/" element={<Home />}></Route>
+                <Route path="/cards" element={<Home />}></Route>
+                <Route path="/" element={<Dashboard />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/register" element={<Register />}></Route>
                 <Route path="/card/:id" element={<CardDetail />}></Route>
