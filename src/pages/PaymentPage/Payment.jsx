@@ -62,11 +62,11 @@ const Payment = () => {
             <div ref={ref} className="mt-4">
               {/* Render your QR scanner component here */}
               <QrReader
-                facingMode={selected}
-                delay={500}
-                onError={handleError}
-                onScan={handleScan}
-                style={{ width: "200px", height: "100px" }}
+                 facingMode={"environment"} // Set facingMode to "environment" for the back camera
+                 delay={500}
+                 onError={handleError}
+                 onScan={handleScan}
+                 style={{ width: "200px", height: "100px" }}
               />
             </div>
           )}
