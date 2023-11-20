@@ -26,16 +26,6 @@ const Payment = () => {
     };
   }, []);
 
-  const handleScan = async (scanData) => {
-    console.log(`loaded data data`, scanData);
-    if (scanData && scanData !== "" && !scanning) {
-      console.log(`loaded >>>`, scanData);
-      setData(scanData);
-      setScanning(false); // Add this line to stop scanning after data is captured
-      navigate(`/paymentConfirmed?result=${scanData}`);
-    }
-  };
-
   const handleError = (err) => {
     console.error(err);
   };
@@ -62,12 +52,19 @@ const Payment = () => {
             <div ref={ref} className="mt-4">
               {/* Render your QR scanner component here */}
               <QrReader
-                 facingMode={"environment"} // Set facingMode to "environment" for the back camera
-                 delay={500}
-                 onError={handleError}
-                 onScan={handleScan}
-                 style={{ width: "200px", height: "100px" }}
+                facingMode={selected}
+                delay={500}
+                onError={handleError}
+                onScan={(result) => {
+                  if (result) {
+                    setData(result);
+                    setScanning(false); // Stop scanning after data is captured
+                    navigate(`/paymentConfirmed?result=${result}`);
+                  }
+                }}
+                style={{ width: '100%' }}
               />
+              <p>{data}</p>
             </div>
           )}
         </Transition>
