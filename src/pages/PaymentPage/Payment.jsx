@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./payment.scss";
 import Loading from '../../components/Loading/Loading';
-import { QrReader } from "react-qr-reader";
+import QrReader from "react-qr-reader";
 import { Transition } from '@headlessui/react';
 import styles from './Qrscan.module.css';
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,6 @@ const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [scanning, setScanning] = useState(false);
   const [data, setData] = useState("");
-  const [selected, setSelected] = useState("environment");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,9 +25,22 @@ const Payment = () => {
     };
   }, []);
 
+  const [result, setResult] = useState('No result');
+
   const handleError = (err) => {
     console.error(err);
-  };
+  }
+
+  const handleScan = (result) => {
+    if (result) {
+      setResult(result);
+    }
+  }
+
+  const previewStyle = {
+    height: 240,
+    width: 320,
+  }
 
   const startScanning = () => {
     setScanning(true);
@@ -42,27 +54,17 @@ const Payment = () => {
         <button className="text-blue-500 border-blue-500 border rounded-lg shadow-md cursor-pointer" onClick={startScanning}>
           Start Scanning
         </button>
-        <select className="w-full py-3 border-blue-400 mt-3 px-2 text-blue-400" onChange={(e) => setSelected(e.target.value)}>
-          <option value={"environment"}>Back Camera</option>
-          <option value={"user"}>Front Camera</option>
-        </select>
 
         <Transition show={scanning} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100">
           {(ref) => (
             <div ref={ref} className="mt-4">
               {/* Render your QR scanner component here */}
               <QrReader
-                facingMode={selected}
                 delay={500}
+                style={previewStyle}
                 onError={handleError}
-                onScan={(result) => {
-                  if (result) {
-                    setData(result);
-                    setScanning(false); // Stop scanning after data is captured
-                    navigate(`/paymentConfirmed?result=${result}`);
-                  }
-                }}
-                style={{ width: '100%' }}
+                onScan={handleScan}
+                facingMode="environment" // Set the default camera to back camera
               />
               <p>{data}</p>
             </div>
@@ -70,7 +72,7 @@ const Payment = () => {
         </Transition>
       </div>
 
-      {scanning && <div className={styles.result}>{data}</div>}
+      {scanning && <div className={styles.result}>{result}</div>}
     </div>
   );
 };
