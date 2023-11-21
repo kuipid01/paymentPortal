@@ -6,6 +6,7 @@ import QrReader from "react-qr-reader";
 import { Transition } from '@headlessui/react';
 import styles from './Qrscan.module.css';
 import { useNavigate } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +48,8 @@ const Payment = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+    <div className="flex flex-col items-center  justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+        <AiOutlineArrowLeft onClick={() => navigate(-1)} className="text-white absolute top-3 left-3 text-4xl" />
       <div className="p-6 bg-white shadow-md rounded-md">
         <h2 className="text-3xl font-semibold mb-6">QR Code Scanner</h2>
 
