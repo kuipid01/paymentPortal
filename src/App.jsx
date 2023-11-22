@@ -19,6 +19,7 @@ import Collect from "./pages/CollectPayment/Collect";
 import Payment from "./pages/PaymentPage/Payment";
 import Dashboard from "./pages/Dashboard";
 import ThreeDotsWave from "./components/DotsLoading";
+import PaymentConfirmation from "./components/PaymentConfirmation/PaymentConfirmation";
 
 function App() {
   const usersCollectionRef = collection(db, "users");
@@ -109,6 +110,7 @@ function App() {
               <Route path="/account" element={<Account />}></Route>
               <Route path="/collect" element={<Collect />}></Route>
               <Route path="/make" element={<Payment />}></Route>
+              <Route path="/confirmPage" element={<PaymentConfirmation />}></Route>
             </Routes>
           </>
         )}
