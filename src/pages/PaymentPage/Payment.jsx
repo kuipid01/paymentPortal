@@ -7,7 +7,7 @@ import styles from './Qrscan.module.css';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AppContext } from "../../contexts/AppContext";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import ThreeDotsWave from "../../components/DotsLoading";
 import { db } from "../../../firebase";
 
@@ -41,14 +41,20 @@ const Payment = () => {
   const handleScan = async (result) => {
     if (result) {
       setLoading(true); // Set loading state to true
-
+  
       const newTransaction = {
         curUser,
         result,
       };
-
+  
       await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
-
+  
+      // Update total balance
+      const amount = parseInt(result.split("&")[1]);
+      const updatedTotalBalance = curUser.totalBalance - amount;
+  
+      await updateDoc(userDocRef, { totalBalance: updatedTotalBalance }); // Update total balance in user object
+  
       setLoading(false); // Set loading state to false
       navigate("/confirmPage"); // Redirect to success page
     }
