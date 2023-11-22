@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./payment.scss";
 import Loading from '../../components/Loading/Loading';
 import QrReader from "react-qr-reader";
@@ -7,13 +7,17 @@ import { Transition } from '@headlessui/react';
 import styles from './Qrscan.module.css';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AppContext } from "../../contexts/AppContext";
+import { addDoc } from "firebase/firestore";
+import ThreeDotsWave from "../../components/DotsLoading";
 
 const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [scanning, setScanning] = useState(false);
   const [data, setData] = useState("");
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false); // Added loading state
+  const { curUser, filteredCards} = useContext(AppContext);
   useEffect(() => {
     // Simulate loading for 1 second
     const loadingTimeout = setTimeout(() => {
@@ -32,9 +36,18 @@ const Payment = () => {
     console.error(err);
   }
 
-  const handleScan = (result) => {
+  const handleScan = async (result) => {
     if (result) {
-      setResult(result);
+      setResult(result)
+      setIsLoading(true)
+      const newTransaction = {
+        curUser,
+        result
+      };
+
+      await addDoc(transactionCollectionRef, newTransaction);
+      setIsLoading(false)
+      navigate('/confirmPage')
     }
   }
 
@@ -46,7 +59,7 @@ const Payment = () => {
   const startScanning = () => {
     setScanning(true);
   };
-
+if (loading) return  <ThreeDotsWave />
   return (
     <div className="flex flex-col items-center  justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
         <AiOutlineArrowLeft onClick={() => navigate(-1)} className="text-white absolute top-3 left-3 text-4xl" />

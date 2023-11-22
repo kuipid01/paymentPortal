@@ -27,7 +27,7 @@ const Register = () => {
         setBtnDisabled(true);
 
         
-        const newUser = { email, password: password, name, surname, permission: 'user' };
+        const newUser = { email, password: password, name, surname, totalBalance:0, permission: 'user' };
         await addDoc(usersCollectionRef, newUser);
         getUsers();
 

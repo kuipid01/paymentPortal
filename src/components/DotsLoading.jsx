@@ -54,6 +54,7 @@ export default function ThreeDotsWave() {
         alignItems: "center",
         justifyContent: "center"
       }}
+      className='h-screen '
     >
       <motion.div
         style={LoadingContainer}

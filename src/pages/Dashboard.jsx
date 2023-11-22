@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { curUser, filteredCards} = useContext(AppContext);
+
+   
   return (
     <div className="w-full overflow-hidden flex flex-col    relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
       <div className="w-full p-5">
@@ -20,11 +24,11 @@ const Dashboard = () => {
         </div>
         <p className="text-gray-400 mt-4 text-2xl">Balance</p>
         <h1 className="text-white text-4xl mt-3 leading-6 tracking-wider">
-          #40000
+        # {curUser?.totalBalance || 'Empty'}
         </h1>
         <hr className="w-full h-[1px] text-gray-600 mt-6 opacity-30 rounded-full" />
         <div className="flex justify-between items-center">
-          <p className="text-gray-400 mt-4 text-2xl">Adegoke Stephen</p>
+          <p className="text-gray-400 mt-4 text-2xl"> {curUser?.name  } {curUser?.surname} </p>
           <p className="text-gray-600 mt-4 text-sm">Current Account</p>
         </div>
       </div>
