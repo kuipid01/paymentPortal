@@ -17,9 +17,9 @@ const Payment = () => {
   const [data, setData] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // Added loading state
-  const { curUser, filteredCards } = useContext(AppContext);
+  const { curUser, filteredCards, } = useContext(AppContext);
   const transactionCollectionRef = collection(db, "transactions");
-
+ 
   useEffect(() => {
     // Simulate loading for 1 second
     const loadingTimeout = setTimeout(() => {
@@ -42,24 +42,26 @@ const Payment = () => {
     if (result) {
       setLoading(true); // Set loading state to true
   
+      const { data: { amount } } = result; // Destructure the amount from the result object
+  
       const newTransaction = {
         curUser,
-        result,
+        amount,
       };
   
       await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
   
       // Update total balance
-      const amount = parseInt(result.split("&")[1]);
-      const updatedTotalBalance = curUser.totalBalance - amount;
-  
-      await updateDoc(userDocRef, { totalBalance: updatedTotalBalance }); // Update total balance in user object
+      const userRef = doc(db, 'users', curUser.id);
+      const updatedTotalBalance = curUser.totalBalance - parseInt(amount);
+      
+      await updateDoc(userRef, { totalBalance: updatedTotalBalance }); // Update total balance in user object
   
       setLoading(false); // Set loading state to false
       navigate("/confirmPage"); // Redirect to success page
     }
   };
-
+  
   const previewStyle = {
     height: 240,
     width: 320,
