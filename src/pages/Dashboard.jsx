@@ -1,13 +1,56 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 const Dashboard = () => {
+    const transactionsCollectionRef  = collection(db, "transactions");
   const navigate = useNavigate();
   const { curUser, filteredCards} = useContext(AppContext);
-
-   
+  const [transactions, setTransactions] = useState([]);
+  const getTransactions = async () => {
+    const transactionsData = await getDocs(transactionsCollectionRef);
+    setTransactions(transactionsData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+  const filteredTransactions = transactions?.filter(
+    (transaction) => transaction.curUser.id === curUser?.id
+  );
+  const getTotalAmountSpend = async () => {
+    const userRef = doc(db, 'users', curUser.id);
+    const totalTransactionBalance = filteredTransactions.reduce((accumulator, currentTransaction) => {
+      const transactionData = JSON.parse(currentTransaction.result).data;
+      return accumulator + parseInt(transactionData?.amount || 0);
+    }, 0);
+  
+    const newBalance = curUser?.totalBalance - totalTransactionBalance;
+  
+    // Update Firestore document
+    await updateDoc(userRef, { totalBalance: newBalance });
+  
+    // Update curUser in session storage
+    const updatedCurUser = { ...curUser, totalBalance: newBalance };
+    sessionStorage.setItem("curUser", JSON.stringify(updatedCurUser));
+  };
+  
+  useEffect(() => {
+    getTransactions();
+  }, []);
+  
+  useEffect(() => {
+    getTotalAmountSpend();
+  }, [filteredTransactions, curUser]);
+  
+  
+  useEffect(() => {
+    getTransactions();
+  }, []);
+  
+  useEffect(() => {
+    getTotalAmountSpend();
+  }, [filteredTransactions, curUser]);
+  
   return (
     <div className="w-full overflow-hidden flex flex-col    relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
       <div className="w-full p-5">
@@ -52,10 +95,10 @@ const Dashboard = () => {
         <hr className="bg-gray-400 opacity-50 " />
         <h1 className="font-bold text-xl text-white">Transactions</h1>
         {
-          [0,1,2,3].map(item =>  <div key={item} className="flex w-full flex-col gap-3">
+          filteredTransactions?.map(item =>  <div key={item.id} className="flex w-full flex-col gap-3">
           <div className="text-gray-500 rounded-[20px] px-[30px] py-3 bg-white">
-            <h1 className="text-lg font-bold">Temitope Alidu</h1>
-            <p className="text-blue-500 font-bold">#20,000</p>
+            <h1 className="text-lg font-bold">{JSON.parse(item.result).data?.recipient}</h1>
+            <p className="text-blue-500 font-bold">#{JSON.parse(item.result).data?.amount}</p>
           </div>
         </div> )
         }

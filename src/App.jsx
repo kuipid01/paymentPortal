@@ -20,7 +20,8 @@ import Payment from "./pages/PaymentPage/Payment";
 import Dashboard from "./pages/Dashboard";
 import ThreeDotsWave from "./components/DotsLoading";
 import PaymentConfirmation from "./components/PaymentConfirmation/PaymentConfirmation";
-
+import ProtectedRoute from "./components/ProtectedRoutes";
+import { Navigate } from "react-router-dom";
 function App() {
   const usersCollectionRef = collection(db, "users");
   const cardsCollectionRef = collection(db, "cards");
@@ -99,7 +100,12 @@ function App() {
 
             <Routes>
               <Route path="/cards" element={<Home />}></Route>
-              <Route path="/" element={<Dashboard />}></Route>
+               <Route path="/"   element={!!curUser ? <Dashboard /> : <Navigate to="/login" />}></Route> 
+              {/* <ProtectedRoute  
+                path="/"
+                element={<Dashboard />}
+                isAuthenticated={!!curUser}
+                fallbackPath="/login" /> */}
               <Route path="/login" element={<Login />}></Route>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/card/:id" element={<CardDetail />}></Route>

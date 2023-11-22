@@ -50,13 +50,6 @@ const Payment = () => {
       };
   
       await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
-  
-      // Update total balance
-      const userRef = doc(db, 'users', curUser.id);
-      const updatedTotalBalance = curUser.totalBalance - parseInt(amount);
-      
-      await updateDoc(userRef, { totalBalance: updatedTotalBalance }); // Update total balance in user object
-  
       setLoading(false); // Set loading state to false
       navigate("/confirmPage"); // Redirect to success page
     }
