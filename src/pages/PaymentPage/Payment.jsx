@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import "./payment.scss";
-import Loading from '../../components/Loading/Loading';
+import Loading from "../../components/Loading/Loading";
 import QrReader from "react-qr-reader";
 import { Transition } from '@headlessui/react';
 import styles from './Qrscan.module.css';
@@ -17,7 +16,9 @@ const Payment = () => {
   const [data, setData] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // Added loading state
-  const { curUser, filteredCards} = useContext(AppContext);
+  const { curUser, filteredCards } = useContext(AppContext);
+  const transactionCollectionRef = collection(db, "transactions");
+
   useEffect(() => {
     // Simulate loading for 1 second
     const loadingTimeout = setTimeout(() => {
@@ -30,39 +31,42 @@ const Payment = () => {
     };
   }, []);
 
-  const [result, setResult] = useState('No result');
+  const [result, setResult] = useState("No result");
 
   const handleError = (err) => {
     console.error(err);
-  }
+  };
 
   const handleScan = async (result) => {
     if (result) {
-      setResult(result)
-      setIsLoading(true)
+      setLoading(true); // Set loading state to true
+
       const newTransaction = {
         curUser,
-        result
+        result,
       };
 
-      await addDoc(transactionCollectionRef, newTransaction);
-      setIsLoading(false)
-      navigate('/confirmPage')
+      await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
+
+      setLoading(false); // Set loading state to false
+      navigate("/confirmPage"); // Redirect to success page
     }
-  }
+  };
 
   const previewStyle = {
     height: 240,
     width: 320,
-  }
+  };
 
   const startScanning = () => {
     setScanning(true);
   };
-if (loading) return  <ThreeDotsWave />
+
+  if (loading) return <ThreeDotsWave />;
+
   return (
-    <div className="flex flex-col items-center  justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
-        <AiOutlineArrowLeft onClick={() => navigate(-1)} className="text-white absolute top-3 left-3 text-4xl" />
+    <div className="flex flex-col items-center  justify-center relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+      <AiOutlineArrowLeft onClick={() => navigate(-1)} className="text-white absolute top-3 left-3 text-4xl" />
       <div className="p-6 bg-white shadow-md rounded-md">
         <h2 className="text-3xl font-semibold mb-6">QR Code Scanner</h2>
 
