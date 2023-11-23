@@ -7,7 +7,7 @@ import styles from './Qrscan.module.css';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AppContext } from "../../contexts/AppContext";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import ThreeDotsWave from "../../components/DotsLoading";
 import { db } from "../../../firebase";
 
@@ -48,7 +48,8 @@ const Payment = () => {
         curUser,
         amount,
       };
-  
+      const userRef = doc(db, 'users', curUser.id);
+       await updateDoc(userRef, { totalBalance: totalBalance - parseInt(amount) });
       await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
       setLoading(false); // Set loading state to false
       navigate("/confirmPage"); // Redirect to success page

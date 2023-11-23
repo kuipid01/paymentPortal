@@ -101,21 +101,17 @@ function App() {
             <Routes>
               <Route path="/cards" element={<Home />}></Route>
                <Route path="/"   element={!!curUser ? <Dashboard /> : <Navigate to="/login" />}></Route> 
-              {/* <ProtectedRoute  
-                path="/"
-                element={<Dashboard />}
-                isAuthenticated={!!curUser}
-                fallbackPath="/login" /> */}
+               <Route path="/make"   element={!!curUser ? <Payment /> : <Navigate to="/login" />}></Route> 
+               <Route path="/collect"   element={!!curUser ? <Collect /> : <Navigate to="/login" />}></Route> 
+               <Route path="/update/:id"   element={!!curUser ? <Update /> : <Navigate to="/login" />}></Route> 
+              
               <Route path="/login" element={<Login />}></Route>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/card/:id" element={<CardDetail />}></Route>
               <Route path="/create" element={<Create />}></Route>
-              <Route path="/update/:id" element={<Update />}></Route>
               <Route path="/users" element={<Users />}></Route>
               <Route path="/cards" element={<AllCards />}></Route>
               <Route path="/account" element={<Account />}></Route>
-              <Route path="/collect" element={<Collect />}></Route>
-              <Route path="/make" element={<Payment />}></Route>
               <Route path="/confirmPage" element={<PaymentConfirmation />}></Route>
             </Routes>
           </>
