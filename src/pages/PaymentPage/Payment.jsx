@@ -40,7 +40,7 @@ const Payment = () => {
 
   const handleScan = async (result) => {
     if (result) {
-      setLoading(true); // Set loading state to true
+      // setLoading(true); // Set loading state to true
       setCompletPaymentBtn(true);
       setResult(result);
     }
@@ -69,7 +69,7 @@ const Payment = () => {
         };
         await addDoc(transactionCollectionRef, newTransaction);
 
-        setLoading(false); // Set loading state to false
+        setLoading(true); // Set loading state to false
         navigate("/confirmPage"); // Redirect to success page
       } else {
         console.error("User not found");
