@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { AppContext } from "./contexts/AppContext";
 
 import { db } from "../firebase";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs,getDoc, updateDoc } from "firebase/firestore";
 import Home from "./components/Home";
 import Login from "./pages/Login/Login";
 import CardDetail from "./components/CardDetail";
@@ -25,9 +25,8 @@ import { Navigate } from "react-router-dom";
 function App() {
   const usersCollectionRef = collection(db, "users");
   const cardsCollectionRef = collection(db, "cards");
-  const [curUser, setCurUser] = useState(
-    JSON.parse(sessionStorage.getItem("curUser"))
-  );
+  const [curUser, setCurUser] = useState(JSON.parse(sessionStorage.getItem("curUser")))
+  const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [cards, setCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
@@ -58,12 +57,23 @@ function App() {
     }, 0);
     await updateDoc(userRef, {totalBalance});
   };
-  
+  const getUserData = async () => {
+    const userRef = doc(db, "users", curUser?.id); // Replace "yourUserId" with the actual user ID
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      console.log({ ...userDoc.data(), id: userDoc.id })
+      setUser({ ...userDoc.data(), id: userDoc.id }); // Extract user data from the document and set it to the state
+    } else {
+      console.error("User not found"); // Handle user not found scenario
+    }
+  };
+
 
   useEffect(() => {
     getUsers();
     getCards();
-
+   
     setLoading(false);
   }, []);
 
@@ -73,7 +83,10 @@ function App() {
   useEffect(() => {
     updateUser();
   }, [filteredCards]);
-  console.log(curUser, cards, filteredCards);
+  useEffect(() => {
+     getUserData();
+  }, [curUser]);
+  console.log(user);
 
   return (
     <Router>
@@ -82,7 +95,7 @@ function App() {
           filteredCards,
           curUser,
           setCurUser,
-          users,
+          user,
           setUsers,
           cards,
           setCards,

@@ -9,9 +9,9 @@ import { getDoc } from "firebase/firestore";
 const Dashboard = () => {
     const transactionsCollectionRef  = collection(db, "transactions");
      const [hasUpdatedBalance, setHasUpdatedBalance] = useState(false);
-       const [user, setUser] = useState(null);
+      
   const navigate = useNavigate();
-  const { curUser, filteredCards} = useContext(AppContext);
+  const { curUser,user, filteredCards} = useContext(AppContext);
   const [transactions, setTransactions] = useState([]);
   const getTransactions = async () => {
     const transactionsData = await getDocs(transactionsCollectionRef);
@@ -20,22 +20,8 @@ const Dashboard = () => {
   const filteredTransactions = transactions?.filter(
     (transaction) => transaction.curUser.id === curUser?.id
   );
-  const getUserData = async () => {
-    const userRef = doc(db, "users", curUser?.id); // Replace "yourUserId" with the actual user ID
-    const userDoc = await getDoc(userRef);
 
-    if (userDoc.exists()) {
-      console.log('here')
-      setUser({ ...userDoc.data(), id: userDoc.id }); // Extract user data from the document and set it to the state
-    } else {
-      console.error("User not found"); // Handle user not found scenario
-    }
-  };
-
-  useEffect(() => {
-    getUserData(); // Fetch user data on component mount
-  }, []);
-  console.log(user)
+ 
   //  const getTotalAmountSpend = async () => {
   //   const userRef = doc(db, 'users', curUser.id);
 
