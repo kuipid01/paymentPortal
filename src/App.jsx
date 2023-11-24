@@ -78,14 +78,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    userCards();
+    if (curUser && curUser.id) {
+      userCards();
+    }
   }, [cards]);
-  useEffect(() => {
+useEffect(() => {
+  if (curUser && curUser.id) {
     updateUser();
-  }, [filteredCards]);
-  useEffect(() => {
-     getUserData();
-  }, [curUser]);
+  }
+}, [filteredCards]);
+useEffect(() => {
+  if (curUser && curUser.id) {
+    getUserData();
+  }
+}, [curUser]);
   console.log(user);
 
   return (
@@ -96,6 +102,7 @@ function App() {
           curUser,
           setCurUser,
           user,
+          users,
           setUsers,
           cards,
           setCards,
