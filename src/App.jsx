@@ -22,6 +22,7 @@ import ThreeDotsWave from "./components/DotsLoading";
 import PaymentConfirmation from "./components/PaymentConfirmation/PaymentConfirmation";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import { Navigate } from "react-router-dom";
+import Homepage from "./pages/Homepage";
 function App() {
   const usersCollectionRef = collection(db, "users");
   const cardsCollectionRef = collection(db, "cards");
@@ -66,25 +67,7 @@ function App() {
     }
   };
 
-  // const updateUser = async () => {
-  //   try {
-  //     const userRef = doc(db, 'users', curUser.id);
-      
-  //     // Fetch user cards directly from the database
-  //     const userCardsData = await getDocs(collection(db, "cards", where("cardHolderId", "==", curUser.id)));
-      
-  //     // Calculate totalBalance based on the fetched user cards
-  //     const totalBalance = userCardsData.docs.reduce((accumulator, currentCard) => {
-  //       return accumulator + parseInt(currentCard.data().balance);
-  //     }, 0);
-  
-  //     await updateDoc(userRef, { totalBalance });
-  //   } catch (error) {
-  //     console.error("Error updating user:", error);
-  //   }
-  // };
-  
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       await getUsers();
@@ -107,11 +90,7 @@ function App() {
     }
   }, [curUser]);
 
-  // useEffect(() => {
-  //   if (curUser && curUser.id) {
-  //     updateUser();
-  //   }
-  // }, [filteredCards]);
+
 
   console.log(user);
 
@@ -141,7 +120,8 @@ function App() {
 
             <Routes>
               <Route path="/cards" element={<Home />}></Route>
-               <Route path="/"   element={!!curUser ? <Dashboard /> : <Navigate to="/login" />}></Route> 
+               <Route path="/dashboard"   element={!!curUser ? <Dashboard /> : <Navigate to="/login" />}></Route> 
+               <Route path="/" element={<Homepage />} ></Route> 
                <Route path="/make"   element={!!curUser ? <Payment /> : <Navigate to="/login" />}></Route> 
                <Route path="/collect"   element={!!curUser ? <Collect /> : <Navigate to="/login" />}></Route> 
                <Route path="/update/:id"   element={!!curUser ? <Update /> : <Navigate to="/login" />}></Route> 

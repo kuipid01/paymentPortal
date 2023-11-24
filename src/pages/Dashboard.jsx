@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
@@ -7,11 +7,11 @@ import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { getDoc } from "firebase/firestore";
 const Dashboard = () => {
-    const transactionsCollectionRef  = collection(db, "transactions");
-     const [hasUpdatedBalance, setHasUpdatedBalance] = useState(false);
-      
+  const transactionsCollectionRef = collection(db, "transactions");
+  const [hasUpdatedBalance, setHasUpdatedBalance] = useState(false);
+const [scanPage, setScanPage] = useState(false)
   const navigate = useNavigate();
-  const { curUser,user, filteredCards} = useContext(AppContext);
+  const { curUser, user, filteredCards } = useContext(AppContext);
   const [transactions, setTransactions] = useState([]);
   const getTransactions = async () => {
     const transactionsData = await getDocs(transactionsCollectionRef);
@@ -21,44 +21,30 @@ const Dashboard = () => {
     (transaction) => transaction.curUser.id === curUser?.id
   );
 
+  console.log(transactions)
  
-  //  const getTotalAmountSpend = async () => {
-  //   const userRef = doc(db, 'users', curUser.id);
-
-  //   if (!hasUpdatedBalance) {
-  //     const totalTransactionBalance = filteredTransactions.reduce((accumulator, currentTransaction) => {
-  //       const transactionData = JSON.parse(currentTransaction.result).data;
-  //       return accumulator + parseInt(transactionData?.amount || 0);
-  //     }, 0);
-
-  //     const newBalance = user?.totalBalance - totalTransactionBalance;
-
-  //     // Update Firestore document
-  //     await updateDoc(userRef, { totalBalance: newBalance });
-
-  //     // Update curUser in session storage
-  //     const updatedCurUser = { ...curUser, totalBalance: newBalance };
-  //     sessionStorage.setItem('curUser', JSON.stringify(updatedCurUser));
-
-  //     // Mark that the balance has been updated
-  //     setHasUpdatedBalance(true);
-  //   }
-  // };
 
   useEffect(() => {
     getTransactions();
   }, []);
 
-  // useEffect(() => {
-  //   // Reset hasUpdatedBalance when filteredTransactions changes
-  //   setHasUpdatedBalance(false);
-  // }, [filteredTransactions]);
-
-  // useEffect(() => {
-  //   getTotalAmountSpend();
-  // }, [filteredTransactions, curUser]);
   return (
     <div className="w-full overflow-hidden flex flex-col    relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
+    {
+      scanPage && (
+        <>
+        <div className="w-full z-[999] h-full blur-[20px] bg-gray-200 absolute top-0 left-0"></div>
+        <AiOutlineClose onClick={() => setScanPage(false)} className="text-3xl cursor-pointer z-[99999] top-[30px] left-[20px] font-bold text-red-600 absolute"/>
+        <div className="w-[70%] flex flex-col justify-center items-center z-[9999] h-fit absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <img className="w-full h-[50%] object-cover" src="/spinner.gif" alt="" />
+          <h1 className="font-bold text-xl text-center w-full">Place Phone Near <b> NFC TAG
+            </b>  </h1>
+        </div>
+        </>
+        
+      )
+    }
+
       <div className="w-full p-5">
         <div className=" flex items-center justify-between w-full">
           <AiOutlineArrowLeft
@@ -73,27 +59,27 @@ const Dashboard = () => {
         </div>
         <p className="text-gray-400 mt-4 text-2xl">Balance</p>
         <h1 className="text-white text-4xl mt-3 leading-6 tracking-wider">
-        # {user?.totalBalance || 'Empty'}
+          # {user?.totalBalance || 'Empty'}
         </h1>
         <hr className="w-full h-[1px] text-gray-600 mt-6 opacity-30 rounded-full" />
         <div className="flex justify-between items-center">
-          <p className="text-gray-400 mt-4 text-2xl"> {curUser?.name  } {curUser?.surname} </p>
+          <p className="text-gray-400 mt-4 text-2xl"> {curUser?.name} {curUser?.surname} </p>
           <p className="text-gray-600 mt-4 text-sm">Current Account</p>
         </div>
       </div>
-      <div className="mt-5  flex-1 justify-between overflow-hidden  p-5 flex flex-col w-full gap-4 rounded-tl-[40px] rounded-tr-[40px] bg-gray-400">
+      <div className="mt-5  z-0 flex-1 justify-between overflow-hidden  p-5 flex flex-col w-full gap-4 rounded-tl-[40px] rounded-tr-[40px] bg-gray-400">
         <div className="w-full flex gap-5 px-5">
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/make">
-            <div className="rounded-2xl flex-1  cursor-pointer font-extrabold transition-all hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300  text-lg text-black flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
               Pay
             </div>
           </Link>
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/collect">
-            <div className="rounded-2xl flex-1 cursor-pointer font-extrabold transition-all  hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 text-lg text-black flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1 cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300 text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
               Receive
             </div>
           </Link>
@@ -102,29 +88,38 @@ const Dashboard = () => {
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/make">
-            <div className="rounded-2xl flex-1  cursor-pointer font-extrabold transition-all hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300  text-lg text-black flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
-             Buy Airtime
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+              Buy Airtime
             </div>
           </Link>
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/collect">
-            <div className="rounded-2xl flex-1 cursor-pointer font-extrabold transition-all  hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 text-lg text-black flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
               Buy Data
             </div>
           </Link>
+
+
+
         </div>
+        
+        <div onClick={() => setScanPage(true)} className="flex cursor-pointer w-[95%] h-[200px] overflow-hidden rounded-[20px]">
+          <img src="/nfc1.jpg" className="w-full h-full object-cover " alt="" />
+        </div>
+        
+       
         <hr className="bg-gray-400 opacity-50 " />
         <h1 className="font-bold text-xl text-white">Transactions</h1>
         {
-          filteredTransactions?.map(item =>  <div key={item.id} className="flex w-full flex-col gap-3">
-          <div className="text-gray-500 rounded-[20px] px-[30px] py-3 bg-white">
-            <h1 className="text-lg font-bold">{JSON.parse(item.result).data?.recipient}</h1>
-            <p className="text-blue-500 font-bold">#{JSON.parse(item.result).data?.amount}</p>
-          </div>
-        </div> )
+          filteredTransactions?.map(item => <div key={item.id} className="flex w-full flex-col gap-3">
+            <div className="text-gray-500 rounded-[20px] px-[30px] py-3 bg-white">
+              <h1 className="text-lg font-bold">{JSON.parse(item.result).data?.recipient || 'empty'}</h1>
+              <p className="text-blue-500 font-bold">#{JSON.parse(item.result).data?.amount || 'empty'}</p>
+            </div>
+          </div>)
         }
-       
+
         <div className="flex items-center gap-3 mt-[60px] rounded-[20px] p-3 bg-gray-500">
           <img
             className="w-[60px] h-[60px] object-cover"

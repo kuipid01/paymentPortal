@@ -41,7 +41,7 @@ const Login = () => {
       if (validPassword) {
         setCurUser(user);
         sessionStorage.setItem('curUser', JSON.stringify(user));
-        navigate('/');
+        navigate('/dashboard');
       } else {
         alert('Invalid login info!');
       }
