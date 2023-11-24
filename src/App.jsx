@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { AppContext } from "./contexts/AppContext";
 
 import { db } from "../firebase";
-import { collection, doc, getDocs,getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs,getDoc, updateDoc,where } from "firebase/firestore";
 import Home from "./components/Home";
 import Login from "./pages/Login/Login";
 import CardDetail from "./components/CardDetail";
@@ -30,7 +30,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [cards, setCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
 
   const getUsers = async () => {
     const usersData = await getDocs(usersCollectionRef);
@@ -39,7 +39,6 @@ function App() {
 
   const getCards = async () => {
     const cardsData = await getDocs(cardsCollectionRef);
-    // const filteredCards =  cardsData.filter((card) => card.cardHolderId === curUser?.id);
     setCards(cardsData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
@@ -50,31 +49,50 @@ function App() {
     setFilteredCards(filteredCards);
   };
 
-  const updateUser = async () => {
-    const userRef = doc(db, 'users', curUser.id);
-       const totalBalance = filteredCards.reduce((accumulator, currentCard) => {
-      return accumulator + parseInt(currentCard.balance);
-    }, 0);
-    await updateDoc(userRef, {totalBalance});
-  };
   const getUserData = async () => {
-    const userRef = doc(db, "users", curUser?.id); // Replace "yourUserId" with the actual user ID
-    const userDoc = await getDoc(userRef);
+    try {
+      const userRef = doc(db, "users", curUser?.id);
+      const userDoc = await getDoc(userRef);
 
-    if (userDoc.exists()) {
-      console.log({ ...userDoc.data(), id: userDoc.id })
-      setUser({ ...userDoc.data(), id: userDoc.id }); // Extract user data from the document and set it to the state
-    } else {
-      console.error("User not found"); // Handle user not found scenario
+      if (userDoc.exists()) {
+        console.log({ ...userDoc.data(), id: userDoc.id });
+        setUser({ ...userDoc.data(), id: userDoc.id });
+        // updateUser(); // Call updateUser here to ensure it uses the correct totalBalance
+      } else {
+        console.error("User not found");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
   };
 
+  // const updateUser = async () => {
+  //   try {
+  //     const userRef = doc(db, 'users', curUser.id);
+      
+  //     // Fetch user cards directly from the database
+  //     const userCardsData = await getDocs(collection(db, "cards", where("cardHolderId", "==", curUser.id)));
+      
+  //     // Calculate totalBalance based on the fetched user cards
+  //     const totalBalance = userCardsData.docs.reduce((accumulator, currentCard) => {
+  //       return accumulator + parseInt(currentCard.data().balance);
+  //     }, 0);
+  
+  //     await updateDoc(userRef, { totalBalance });
+  //   } catch (error) {
+  //     console.error("Error updating user:", error);
+  //   }
+  // };
+  
 
   useEffect(() => {
-    getUsers();
-    getCards();
-   
-    setLoading(false);
+    const fetchData = async () => {
+      await getUsers();
+      await getCards();
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -82,16 +100,19 @@ function App() {
       userCards();
     }
   }, [cards]);
-useEffect(() => {
-  if (curUser && curUser.id) {
-    updateUser();
-  }
-}, [filteredCards]);
-useEffect(() => {
-  if (curUser && curUser.id) {
-    getUserData();
-  }
-}, [curUser]);
+
+  useEffect(() => {
+    if (curUser && curUser.id) {
+      getUserData();
+    }
+  }, [curUser]);
+
+  // useEffect(() => {
+  //   if (curUser && curUser.id) {
+  //     updateUser();
+  //   }
+  // }, [filteredCards]);
+
   console.log(user);
 
   return (

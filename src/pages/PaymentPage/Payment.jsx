@@ -42,17 +42,37 @@ const Payment = () => {
     if (result) {
       setLoading(true); // Set loading state to true
   
-      const { data: { amount } } = result; // Destructure the amount from the result object
+      try {
+        // Fetch user data again to get the most up-to-date totalBalance
+        const userRef = doc(db, 'users', curUser.id);
+        const userDoc = await getDoc(userRef);
   
-      const newTransaction = {
-        curUser,
-        amount,
-      };
-      const userRef = doc(db, 'users', curUser.id);
-       await updateDoc(userRef, { totalBalance: totalBalance - parseInt(amount) });
-      await addDoc(transactionCollectionRef, newTransaction); // Create transaction reference in the database
-      setLoading(false); // Set loading state to false
-      navigate("/confirmPage"); // Redirect to success page
+        if (userDoc.exists()) {
+          const { data: { amount } } = result; // Destructure the amount from the result object
+          const totalBalance = userDoc.data().totalBalance;
+  
+          // Update totalBalance
+          await updateDoc(userRef, { totalBalance: totalBalance - parseInt(amount) });
+  
+          // Create transaction reference in the database
+          const newTransaction = {
+            curUser,
+            amount,
+          };
+          await addDoc(transactionCollectionRef, newTransaction);
+  
+          setLoading(false); // Set loading state to false
+          navigate("/confirmPage"); // Redirect to success page
+        } else {
+          console.error("User not found");
+          setLoading(false); // Set loading state to false
+          // Handle error, show a message, or redirect to an error page
+        }
+      } catch (error) {
+        console.error("Error updating user:", error);
+        setLoading(false); // Set loading state to false
+        // Handle error, show a message, or redirect to an error page
+      }
     }
   };
   
