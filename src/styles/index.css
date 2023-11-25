@@ -8,7 +8,7 @@
 
 body {
   position: relative;
-  padding-bottom: 54px;
+  /* padding-bottom: 54px; */
   min-height: 100vh;
   background-color: #f6faff !important;
 }

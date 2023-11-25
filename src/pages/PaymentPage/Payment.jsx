@@ -49,7 +49,7 @@ const Payment = () => {
     try {
       // Parse the result string into an object
       const resultObject = JSON.parse(result);
-      console.log(result)
+      console.log(result);
       // Fetch user data again to get the most up-to-date totalBalance
       const userRef = doc(db, "users", curUser.id);
       const userDoc = await getDoc(userRef);
@@ -72,23 +72,18 @@ const Payment = () => {
         };
         await addDoc(transactionCollectionRef, newTransaction);
 
-        setLoading(true);  //Set loading state to false
-        navigate("/confirmPage");  //Redirect to success page
+        setLoading(true); //Set loading state to false
+        navigate("/confirmPage"); //Redirect to success page
       } else {
         console.error("User not found");
-        setLoading(false);  //Set loading state to false
+        setLoading(false); //Set loading state to false
         //Handle error, show a message, or redirect to an error page
       }
     } catch (error) {
       console.error("Error updating user:", error);
-      setLoading(false);  //Set loading state to false
+      setLoading(false); //Set loading state to false
       // Handle error, show a message, or redirect to an error page
     }
-  };
-
-  const previewStyle = {
-    height: 240,
-    width: 320,
   };
 
   const startScanning = () => {
@@ -103,28 +98,32 @@ const Payment = () => {
         onClick={() => navigate(-1)}
         className="text-white absolute top-3 left-3 text-4xl"
       />
-      <div className="p-6 bg-white shadow-md rounded-md">
+      <div className="p-6 w-[80%] h-[60%] bg-white shadow-md rounded-md">
         <h2 className="text-xl font-semibold mb-6">QR Code Scanner</h2>
 
-        {!scCompletPaymentBtn && !result &&
+        {!scCompletPaymentBtn && !result && (
           <>
-            <button
-              className="text-blue-500 border-blue-500 border rounded-lg shadow-md cursor-pointer"
-              onClick={startScanning}>
-              Start Scanning
-            </button>
+            {!scanning && (
+              <button
+                className="text-blue-500 border-blue-500 border rounded-lg shadow-md cursor-pointer"
+                onClick={startScanning}
+              >
+                Start Scanning
+              </button>
+            )}
 
             <Transition
               show={scanning}
               enter="transition-opacity duration-500"
               enterFrom="opacity-0"
-              enterTo="opacity-100">
+              enterTo="opacity-100"
+            >
               {(ref) => (
                 <div ref={ref} className="mt-4">
                   {/* Render your QR scanner component here */}
                   <QrReader
                     delay={500}
-                    style={previewStyle}
+                    // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode="environment" // Set the default camera to back camera
@@ -134,14 +133,13 @@ const Payment = () => {
               )}
             </Transition>
           </>
-
-
-        }
+        )}
       </div>
       {scCompletPaymentBtn && result && (
         <button
           onClick={confirmPayment}
-          className="bg-green-500 mt-[100px] text-white py-2 px-4 rounded-md mt-4">
+          className="bg-green-500 mt-[100px] text-white py-2 px-4 rounded-md mt-4"
+        >
           Complete Payment
         </button>
       )}
