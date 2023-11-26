@@ -5,7 +5,7 @@ const Homepage = () => {
 
 
     return (
-        <div className='w-full relative  flex justify-center  h-screen bg-[#1E1E1E]'>
+        <div className='w-full overflow-x-hidden relative  flex justify-center  h-screen bg-[#1E1E1E]'>
             <div className='flex w-fit h-fit flex-col justify-center items-center'>
             <div style={{ background: 'linear-gradient(90deg, #FA06FF 0%, rgba(219, 255, 0, 0.87) 90.1%)' }} className='rounded-[20px]  w-[70px] mt-[47px] h-[44px]'></div>
             <div style={{ background: 'linear-gradient(90deg, #FA06FF 0%, rgba(219, 255, 0, 0.87) 90.1%)' }} className='rounded-[20px] w-[70px] mt-[47px] h-[44px]'></div>
