@@ -46,7 +46,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex  w-full  bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700  mx-auto  h-screen  rounded-md shadow-md">
+      <div className="flex  w-full  bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700  mx-auto  h-full py-5  rounded-md shadow-md">
         {/* Left Section with Image */}
         <div className="md:w-1/2 hidden">
           <img
@@ -59,7 +59,7 @@ const Register = () => {
         {/* Right Section with Form */}
         <div className="flex-1 flex flex-col justify-center items-center">
           <h1 className='font-bold text-3xl text-white uppercase'>Sign Up </h1>
-          <form onSubmit={handleRegister} className="my-8 w-[80%] h-fit mx-auto bg-white p-8 rounded-md shadow-md">
+          <form onSubmit={handleRegister} className="my-8 w-[90%] h-fit mx-auto bg-white p-8 rounded-md shadow-md">
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
