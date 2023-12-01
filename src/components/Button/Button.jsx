@@ -7,7 +7,7 @@ const Button = ({ darkBtn, text }) => {
 
 
   return (
-    <button className={` ${darkBtn ? "darkBtn" : "normalBtn"}`}>{text}</button>
+    <button className={` button1 ${darkBtn ? "darkBtn" : "normalBtn"}`}>{text}</button>
   );
 };
 

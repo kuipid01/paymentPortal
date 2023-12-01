@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const { actions, setActions } = useContext(ActionsContext);
-const [nfcError, setNfcError] = useState('Scanning')
+  const [nfcError, setNfcError] = useState("Scanning");
   const transactionsCollectionRef = collection(db, "transactions");
   const [scanPage, setScanPage] = useState(false);
   const navigate = useNavigate();
@@ -64,10 +64,8 @@ const [nfcError, setNfcError] = useState('Scanning')
   const scan = useCallback(async () => {
     if ("NDEFReader" in window) {
       handleNFCScan();
-    }
-    else
-    {
-     setNfcError('NFC reader not available on this device')
+    } else {
+      setNfcError("NFC reader not available on this device");
     }
   }, [setActions]);
 
@@ -90,7 +88,7 @@ const [nfcError, setNfcError] = useState('Scanning')
 
   const setScanning = () => {
     setScanPage(true);
-    scan()
+    scan();
     setActions({ ...actions, scan: "scanning" });
   };
 
@@ -198,7 +196,9 @@ const [nfcError, setNfcError] = useState('Scanning')
         >
           <img src="/nfc1.jpg" className="w-full h-full object-cover " alt="" />
         </div>
-
+        <Link to='/otherPayment' className="w-full p-3 flex items-center justify-center rounded-[20px] bg-blue-500/100 text-white font-bold">
+          Other Payment Options
+        </Link>
         <hr className="bg-gray-400 opacity-50 " />
         <h1 className="font-bold text-xl text-white">Transactions</h1>
         {filteredTransactions?.map((item) => (

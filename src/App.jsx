@@ -31,6 +31,8 @@ import ProtectedRoute from "./components/ProtectedRoutes";
 import { Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import { ActionsContext } from "./contexts/context";
+import OtherPayment from "./pages/OtherPayment";
+import CreditCard from "./pages/CreditCard";
 function App() {
   const usersCollectionRef = collection(db, "users");
   const cardsCollectionRef = collection(db, "cards");
@@ -161,6 +163,8 @@ console.log(actions)
                 <Route path="/users" element={<Users />}></Route>
                 <Route path="/cards" element={<AllCards />}></Route>
                 <Route path="/account" element={<Account />}></Route>
+                <Route path="/otherPayment" element={<OtherPayment />}></Route>
+                <Route path="/credit" element={<CreditCard />}></Route>
                 <Route
                   path="/confirmPage"
                   element={<PaymentConfirmation />}
