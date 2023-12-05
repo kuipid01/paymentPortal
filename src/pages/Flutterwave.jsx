@@ -49,10 +49,10 @@ export const Flutterwave = () => {
     <div className="w-full  bg-gradient-to-br from-gray-800 to-gray-900 h-screen flex flex-col relative">
        <AiOutlineArrowLeft  onClick={() => navigate(-1)} className="absolute text-gray-100 left-5 top-5" />
 
-<h1 className="text-gray-100 mt-[70px]  pl-[30px] text-[30px] my-[30px]">
+<h1 className="text-gray-100 mt-[70px]  pl-[30px] text-[30px]">
   Enter Transactions  <br /> Details{" "}
 </h1>
-
+<p  className="text-gray-500 mt-[10px]  pl-[30px] text-[15px] my-[30px]">Choose transaction method from Flutterwave tab after entering method</p>
 <form onSubmit={handleCheckOut} className="w-[90%] flex flex-col gap-4 mx-auto" action="">
         <div className=" flex flex-col p-1 gap-2">
           <label className="text-gray-300" htmlFor="card "> Amount To Pay</label>

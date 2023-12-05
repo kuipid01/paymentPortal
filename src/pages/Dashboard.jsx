@@ -182,10 +182,10 @@ const Dashboard = () => {
           </Link>
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
-            to="/collect"
+            to="/flutter"
           >
             <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-blue-500/100  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px]  shadow relative">
-              Buy Data
+             USSD
             </div>
           </Link>
         </div>
