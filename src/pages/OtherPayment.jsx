@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineArrowLeft, AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
 const OtherPayment = () => {
+  const { curUser, user } = useContext(AppContext);
     const navigate = useNavigate();
+ 
   const linksDetails = [
     {
       id: 1,
@@ -16,14 +21,17 @@ const OtherPayment = () => {
       name: "FlutterWave",
       imgUrl: 
       "https://asset.brandfetch.io/iddYbQIdlK/idN21BaY-U.jpeg",
+      link:'/flutter'
     },
     {
-      id: 1,
+      id: 3,
       name: "Pay",
       imgUrl: "https://lh3.googleusercontent.com/sLOqRZU_8S8C9xMIyc7kD74pyIuJWUi5zBsopj95PZ6C78PFRxwaLN0mMfDbQhKM0F9VEsM-L_0wt-q-HAJwDr3phCjzNjASyjSL",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0K7UR8kQj5FiKOQmorJ_8D7IXXNe12UeDpPAUHHFfUzC5COqaifJZA47ILgiawNZUOTQ&usqp=CAU",
     },
   ];
+
+
   return (
     <div className="w-full  bg-gradient-to-br from-gray-800 to-gray-900 h-screen flex flex-col relative">
       <AiOutlineArrowLeft  onClick={() => navigate(-1)} className="absolute text-gray-100 left-5 top-5" />
@@ -33,7 +41,7 @@ const OtherPayment = () => {
       </h1>
       <div className="flex w-full mx-auto gap-5 flex-col">
         {linksDetails.map((item) => (
-          <Link to={item.link} className="w-[90%] shadow-md mx-auto px-3 h-[60px] py-3  rounded-[5px] bg-gray-100 cursor-pointer items-center flex justify-between ">
+          <Link to={item.link} key={item.id} className="w-[90%] shadow-md mx-auto px-3 h-[60px] py-3  rounded-[5px] bg-gray-100 cursor-pointer items-center flex justify-between ">
            
            <div className=" flex h-full items-center gap-3">
            {item.logo ? (

@@ -105,7 +105,7 @@ const Payment = () => {
           <>
             {!scanning && (
               <button
-                className="text-blue-500 border-blue-500 border rounded-lg shadow-md cursor-pointer"
+                className="text-blue-500 border-blue-500 px-3 py-2 border rounded-lg shadow-md cursor-pointer"
                 onClick={startScanning}
               >
                 Start Scanning
@@ -138,7 +138,7 @@ const Payment = () => {
       {scCompletPaymentBtn && result && (
         <button
           onClick={confirmPayment}
-          className="bg-green-500 mt-[100px] text-white py-2 px-4 rounded-md mt-4"
+          className="bg-green-500 mt-[100px] text-white py-2 px-4 rounded-md "
         >
           Complete Payment
         </button>

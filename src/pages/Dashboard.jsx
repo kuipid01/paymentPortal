@@ -100,12 +100,12 @@ const Dashboard = () => {
     <div className="w-full overflow-hidden flex flex-col    relative min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-gray-700">
       {scanPage && (
         <>
-          <div className="w-full z-[999] h-full blur-[2px] bg-white absolute top-0 left-0"></div>
+          <div className="w-full z-[999] h-screen fixed blur-[2px] bg-white  top-0 left-0"></div>
           <AiOutlineClose
             onClick={() => setScanPage(false)}
             className="text-3xl cursor-pointer z-[99999] top-[30px] left-[20px] font-bold text-red-600 absolute"
           />
-          <div className="w-[70%] flex flex-col justify-center items-center z-[9999] h-fit absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="w-[70%]  flex flex-col justify-center items-center z-[9999] h-[40%] absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
             <img
               className="w-full h-[50%] object-cover"
               src="/spinner.gif"
@@ -152,13 +152,13 @@ const Dashboard = () => {
           <p className="text-gray-600 mt-4 text-sm">Current Account</p>
         </div>
       </div>
-      <div className="mt-5  z-0 flex-1 justify-between overflow-hidden  p-5 flex flex-col w-full gap-4 rounded-tl-[40px] rounded-tr-[40px] bg-gray-400">
+      <div className="mt-5  z-0 flex-1 justify-between overflow-hidden  p-5 flex flex-col w-full gap-4 rounded-tl-[40px] rounded-tr-[40px] bg-[#264653]">
         <div className="w-full flex gap-5 px-5">
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/make"
           >
-            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-blue-500/100  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px]  shadow relative">
               Pay
             </div>
           </Link>
@@ -166,7 +166,7 @@ const Dashboard = () => {
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/collect"
           >
-            <div className="rounded-2xl transform hover:scale-[0.97] flex-1 cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300 text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1 cursor-pointer font-extrabold transition-all bg-blue-500/100  focus:outline-none focus:ring focus:border-blue-300 text-lg text-white flex justify-center items-center h-[80px]  shadow relative">
               Receive
             </div>
           </Link>
@@ -174,17 +174,17 @@ const Dashboard = () => {
         <div className="w-full flex gap-5 px-5">
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
-            to="/make"
+            to="/transfer"
           >
-            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
-              Buy Airtime
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-blue-500/100  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px]  shadow relative">
+              Bank Transfer
             </div>
           </Link>
           <Link
             className="flex-1 flex justify-center items-center text-white   mt-2"
             to="/collect"
           >
-            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-cyan-600  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px] bg-[#ffff] shadow relative">
+            <div className="rounded-2xl transform hover:scale-[0.97] flex-1   cursor-pointer font-extrabold transition-all bg-blue-500/100  focus:outline-none focus:ring focus:border-blue-300  text-lg text-white flex justify-center items-center h-[80px]  shadow relative">
               Buy Data
             </div>
           </Link>
@@ -192,8 +192,11 @@ const Dashboard = () => {
 
         <div
           onClick={setScanning}
-          className="flex mx-auto hover:scale-95 transition-all cursor-pointer w-[95%] h-[200px] overflow-hidden rounded-[20px]"
+          className="flex relative mx-auto hover:scale-95 transition-all cursor-pointer w-[95%] h-[200px] overflow-hidden rounded-[20px]"
         >
+          <div className=" absolute top-0 left-0 w-full h-full flex justify-center items-center bg-[#264653c4] ">
+            <h1 className="text-2xl font-bold  text-white">Air Tag</h1>
+          </div>
           <img src="/nfc1.jpg" className="w-full h-full object-cover " alt="" />
         </div>
         <Link to='/otherPayment' className="w-full p-3 flex items-center justify-center rounded-[20px] bg-blue-500/100 text-white font-bold">

@@ -33,6 +33,8 @@ import Homepage from "./pages/Homepage";
 import { ActionsContext } from "./contexts/context";
 import OtherPayment from "./pages/OtherPayment";
 import CreditCard from "./pages/CreditCard";
+import { Flutterwave } from "./pages/Flutterwave";
+import { BankTransfer } from "./pages/BankTransfer";
 function App() {
   const usersCollectionRef = collection(db, "users");
   const cardsCollectionRef = collection(db, "cards");
@@ -165,6 +167,8 @@ console.log(actions)
                 <Route path="/account" element={<Account />}></Route>
                 <Route path="/otherPayment" element={<OtherPayment />}></Route>
                 <Route path="/credit" element={<CreditCard />}></Route>
+                <Route path="/flutter" element={<Flutterwave />}></Route>
+                <Route path="/transfer" element={<BankTransfer />}></Route>
                 <Route
                   path="/confirmPage"
                   element={<PaymentConfirmation />}
