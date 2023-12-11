@@ -114,6 +114,10 @@ const Dashboard = () => {
             <h1 className="font-bold text-xl text-center w-full">
               Place Phone Near <b> NFC TAG</b>{" "}
             </h1>
+
+            <div className="w-fit rounded-lg my-5 bg-blue-500 text-white uppercase p-3 border border-gray-300 shadow animate-pulse">
+             <span>AirTagId :  </span> <span className=" font-bold">{curUser?.name}_Dayopay</span> 
+            </div>
             <p className="text-md capitalize">{nfcError}</p>
           </div>
           {actions.scan === "scanned" ? (
