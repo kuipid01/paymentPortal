@@ -33,7 +33,7 @@ const Collect = () => {
       const { userId } = curUser;
       const newTransaction = {
         userId,
-        ...paymentDate,
+        ...paymentData,
       };
       await addDoc(transactionRef, newTransaction);
     }
